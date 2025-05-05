@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
-    "rootDir": "./",
+    "rootDir": "./src",
     "outDir": "dist",
 
     "target": "ES2020",
     "module": "commonjs",
     "moduleResolution": "node",
 
-    // 💥 Máxima rigurosidad en el tipado
     "strict": true,
-    "strictNullChecks": true,             // ❗ No permite null/undefined sin control
+    "strictNullChecks": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": true, // ❗ Asegura inicialización de props en clases
-    "noImplicitThis": true,               // ❗ this debe estar tipado
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
 
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -27,6 +26,17 @@
     "isolatedModules": true,
 
     "noEmitOnError": true,
+
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"],
+      "@config/*": ["config/*"],
+      "@features/*": ["features/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@types/*": ["types/*"],
+      "@utils/*": ["utils/*"]
+    },
+
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },
   "include": ["src"],
