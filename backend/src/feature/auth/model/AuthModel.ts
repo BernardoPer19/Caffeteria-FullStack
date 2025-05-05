@@ -32,4 +32,18 @@ export class AuthModel {
       throw new Error("Error en la DB");
     }
   }
+
+  static async verifyEmail(email: string) {
+    try {
+      const query = `SELECT * FROM users_tb WHERE email = $1`;
+      const value = email;
+      const result: QueryResult<UserType> = await pool.query(query, [value]);
+      return result.rows[0];
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      throw new Error("Error en la DB");
+    }
+  }
 }
