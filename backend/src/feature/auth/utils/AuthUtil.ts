@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
-import { UserType } from "../types/AuthTypes";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_PASSWORD } from "@/config/config";
+import { CookieOptions } from "express";
 
 const hashPassword = async (password: string) => {
   const hashedPassowrd = await bcrypt.hash(password, 10);
@@ -13,10 +13,10 @@ const comparePassword = async (password: string, hashPassword: string) => {
   return comparePassword;
 };
 
-const createToken = (user: UserType): string => {
+const createToken = (user: JwtPayload): string => {
   const token = jwt.sign(
     {
-      id: user.user_id,
+      user_id: user.user_id,
       nombre: user.nombre,
       email: user.email,
       fechaCreacion: user.fechaCreacion,
@@ -28,4 +28,11 @@ const createToken = (user: UserType): string => {
   return token;
 };
 
-export { hashPassword, comparePassword, createToken };
+const defaultCookieOptions: CookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  maxAge: 24 * 60 * 60 * 1000,
+};
+
+export { hashPassword, comparePassword, createToken, defaultCookieOptions };

@@ -1,35 +1,47 @@
-import { Request, Response, NextFunction } from "express";
-import { AuthModel } from "../model/AuthModel";
+import { Request, Response, NextFunction, CookieOptions } from "express";
 import { validateLogin, validateRegister } from "../schemas/AuthSchema";
 import { catchAsync } from "@utils/catchAsync";
-import { BadRequestError } from "@/Error";
-import { UserType } from "../types/AuthTypes";
+import { AuthService } from "../services/AuthService";
 
 export class AuthController {
   static RegisterUser = catchAsync(
     async (
       req: Request,
-      res: Response<{ message: string; data: UserType }>,
+      res: Response<{ message: string; bienvenida: string }>,
       _next: NextFunction
     ) => {
-      const validateData = validateRegister(req.body);
-      const isAdmin = !!validateData.rol;
+      const validatedData = validateRegister(req.body);
+      const isAdmin = !!validatedData.rol;
 
-      const foundEmail = await AuthModel.verifyEmail(validateData.email);
-      if (foundEmail) {
-        throw new BadRequestError(
-          "Este email ya fue registrado, intente con otro o contacte con los administradores"
-        );
-      }
-
-      const newUser = await AuthModel.RegisterModel(validateData, isAdmin);
+      const newUser = await AuthService.registerUser(validatedData, isAdmin);
 
       res.status(201).json({
         message: "Usuario registrado exitosamente",
-        data: newUser,
+        bienvenida: `Bienvenido ${newUser.nombre}!!`,
       });
     }
   );
 
+  static loginUser = catchAsync(
+    async (req: Request, res: Response, _next: NextFunction) => {
+      const validatedData = validateLogin(req.body);
 
+      const token = await AuthService.loginUser(
+        validatedData.email,
+        validatedData.contraseña
+      );
+
+      const options: CookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000,
+      };
+
+      res.status(200).cookie("access_token", token, options).json({
+        message: "El usuario inició sesión con éxito!",
+        welcomeMessage: `Bienvenido!!`,
+      });
+    }
+  );
 }

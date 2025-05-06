@@ -14,3 +14,12 @@ type LoginType = Omit<UserType, "user_id" | "fechaCreacion" | "rol" | "nombre">;
 type Roles = "usuario" | "admin" | "empleado";
 
 export { UserType, Roles, RegisterType, LoginType };
+
+
+interface JwtPayload {
+  user_id: string;
+  nombre: string;
+  email: string;
+  fechaCreacion: string;
+  rol: boolean;
+}
