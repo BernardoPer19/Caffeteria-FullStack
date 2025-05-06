@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { UserType } from "../types/AuthTypes";
 import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "@/config/config";

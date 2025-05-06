@@ -16,8 +16,8 @@ export class AuthModel {
       const rolId = await RolModel.getRol(rolName);
 
       const query = `INSERT INTO public.users_tb(
-	user_id, email, nombre, "contraseña", "fechaCreacion", rol_id)
-	VALUES (?, ?, ?, ?, ?, ?);`;
+	                   user_id, email, nombre, "contraseña", "fechaCreacion", rol_id)
+	                   VALUES (?, ?, ?, ?, ?, ?);`;
       const hashPassowrd = await hashPassword(newUser.contraseña);
 
       const values = [newUser.nombre, newUser.email, hashPassowrd, rolId];

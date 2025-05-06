@@ -23,12 +23,16 @@ const LoginSchema = z.object({
 
 export type LoginType = z.infer<typeof LoginSchema>;
 
-export const validateLogin = (input: unknown): LoginType => {
-  return LoginSchema.parse(input);
-};
-
 export type RegisterType = z.infer<typeof RegisterSchema>;
 
+export const validateLogin = (input: unknown): LoginType => {
+  const vali = LoginSchema.safeParse(input);
+  if (!vali.success) {
+    const errorMessages = vali.error.errors.map((e) => e.message).join(", ");
+    throw new Error(errorMessages);
+  }
+  return vali.data;
+};
 
 
 export const validateRegister = (input: unknown): RegisterType => {
