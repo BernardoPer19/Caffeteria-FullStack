@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 // Schema general
-export const RegisterSchema = z.object({
+export const MixedUserSchema = z.object({
   nombre: z
     .string()
     .min(3, { message: "El nombre debe tener al menos 3 caracteres" }),
@@ -18,28 +18,26 @@ export const RegisterSchema = z.object({
 
 const LoginSchema = z.object({
   email: z.string().email("Email no válido"),
-  contraseña: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
+  contraseña: z
+    .string()
+    .min(6, "La contraseña debe tener al menos 6 caracteres"),
 });
 
 export type LoginType = z.infer<typeof LoginSchema>;
 
-export type RegisterType = z.infer<typeof RegisterSchema>;
-
 export const validateLogin = (input: unknown): LoginType => {
-  const vali = LoginSchema.safeParse(input);
-  if (!vali.success) {
-    const errorMessages = vali.error.errors.map((e) => e.message).join(", ");
-    throw new Error(errorMessages);
-  }
-  return vali.data;
+  return LoginSchema.parse(input);
 };
 
+export type MixedUserType = z.infer<typeof MixedUserSchema>;
 
-export const validateRegister = (input: unknown): RegisterType => {
-  const vali = RegisterSchema.safeParse(input);
-  if (!vali.success) {
-    const errorMessages = vali.error.errors.map((e) => e.message).join(", ");
-    throw new Error(errorMessages);
+
+export const validateRegister = (input: unknown): MixedUserType => {
+  const result = MixedUserSchema.safeParse(input);
+
+  if (!result.success) {
+    throw result.error; 
   }
-  return vali.data;
+
+  return result.data;
 };

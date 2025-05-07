@@ -2,6 +2,7 @@ import { Request, Response, NextFunction, CookieOptions } from "express";
 import { validateLogin, validateRegister } from "../schemas/AuthSchema";
 import { catchAsync } from "@utils/catchAsync";
 import { AuthService } from "../services/AuthService";
+import { UserType } from "../types/AuthTypes";
 
 export class AuthController {
   static RegisterUser = catchAsync(
@@ -44,4 +45,22 @@ export class AuthController {
       });
     }
   );
+
+  static logout = (_req: Request, res: Response) => {
+    res.clearCookie("access_token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+  };
+
+  static protectedRoute = (req: Request, res: Response) => {
+    const user = req.user as UserType;
+
+    if (!user) {
+      res.json({ message: "Usted no esta Autorizado para ingresar acá" });
+    }
+
+    return res.status(200).json({ message: "Usuario autorizado", user });
+  };
 }

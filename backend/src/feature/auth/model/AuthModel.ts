@@ -1,13 +1,13 @@
 import { pool } from "@config/db/dbB";
-import { RegisterType } from "../schemas/AuthSchema";
 import { QueryResult } from "pg";
 import { UserType } from "../types/AuthTypes";
 import { RolModel } from "./AuthRol";
 import { hashPassword } from "../utils/AuthUtil";
+import { MixedUserType } from "../schemas/AuthSchema";
 
 export class AuthModel {
   static async RegisterModel(
-    newUser: RegisterType,
+    newUser: MixedUserType,
     isAdmin: boolean
   ): Promise<UserType> {
     try {
@@ -16,11 +16,12 @@ export class AuthModel {
       const rolId = await RolModel.getRol(rolName);
 
       const query = `INSERT INTO public.users_tb(
-	                   user_id, email, nombre, "contraseña", "fechaCreacion", rol_id)
-	                   VALUES (?, ?, ?, ?, ?, ?);`;
-      const hashPassowrd = await hashPassword(newUser.contraseña);
+                       email, nombre, "contraseña", "fechaCreacion", rol_id)
+                     VALUES ($1, $2, $3, NOW(), $4) RETURNING *;`;
 
-      const values = [newUser.nombre, newUser.email, hashPassowrd, rolId];
+      const hashedPassword = await hashPassword(newUser.contraseña);
+
+      const values = [newUser.email, newUser.nombre, hashedPassword, rolId];
 
       const result: QueryResult<UserType> = await pool.query(query, values);
 

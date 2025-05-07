@@ -1,11 +1,12 @@
-// import { Router } from 'express';
+import { Router } from 'express';
+import { AuthController } from '../controller/AuthController';
 
-// const AuthRouter = Router();
+const AuthRouter = Router();
 
-// AuthRouter.post('/register', registerController);
-// AuthRouter.post('/login', loginController);
+AuthRouter.post('/register', AuthController.RegisterUser);
+AuthRouter.post('/login', AuthController.loginUser);
 // AuthRouter.post('/logout', logoutController);
 
 // AuthRouter.get('/protected', authenticateToken, protectedController);
 
-// export default AuthRouter;
+export default AuthRouter;

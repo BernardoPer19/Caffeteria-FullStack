@@ -31,13 +31,11 @@
     "paths": {
       "@/*": ["*"],
       "@config/*": ["config/*"],
-      "@features/*": ["features/*"],
+      "@features/*": ["feature/*"],
       "@middlewares/*": ["middlewares/*"],
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"]
-    },
-
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]
