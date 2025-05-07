@@ -8,7 +8,7 @@ export class AuthController {
   static RegisterUser = catchAsync(
     async (
       req: Request,
-      res: Response<{ message: string; bienvenida: string }>,
+      res: Response<{ message: string; bienvenida?: string }>,
       _next: NextFunction
     ) => {
       const validatedData = validateRegister(req.body);
@@ -18,7 +18,7 @@ export class AuthController {
 
       res.status(201).json({
         message: "Usuario registrado exitosamente",
-        bienvenida: `Bienvenido ${newUser.nombre}!!`,
+        bienvenida: `Bienvenido ${newUser.email}!!`,
       });
     }
   );
@@ -55,12 +55,12 @@ export class AuthController {
   };
 
   static protectedRoute = (req: Request, res: Response) => {
-    const user = req.user as UserType;
-
+    const user = req.user as UserType | undefined;
+  
     if (!user) {
-      res.json({ message: "Usted no esta Autorizado para ingresar acá" });
+      return res.status(401).json({ message: "No autorizado" });
     }
-
+  
     return res.status(200).json({ message: "Usuario autorizado", user });
   };
-}
+}  

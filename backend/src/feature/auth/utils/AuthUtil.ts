@@ -22,7 +22,7 @@ const createToken = (user: JwtPayload): string => {
       rol: user.rol,
     },
     JWT_PASSWORD,
-    { expiresIn: "24h", algorithm: "ES256" }
+    { expiresIn: "24h" }
   );
   return token;
 };
