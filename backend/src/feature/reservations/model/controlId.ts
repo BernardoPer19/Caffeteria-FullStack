@@ -2,7 +2,7 @@ import { RowDataPacket } from "mysql2";
 import {connect} from "../../../config/db/db.j";
 
 export class planTrabajo{
-    static  controlIdReserva = async (nombrePlan : string) =>{
+    static  controlIdPlan = async (nombrePlan : string) =>{
         try {
             const query = `SELECT plan_id FROM reservas WHERE nombre = ?`;
             const values = [nombrePlan];
