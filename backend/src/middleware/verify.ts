@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { UserType } from "@/types/UserType";
 import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "@/config/config";
+import { UserType } from "@/types/UserType";
 
 interface AuthenticatedRequest extends Request {
   user?: UserType;
