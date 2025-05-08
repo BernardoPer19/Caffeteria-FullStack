@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
 import { validateLogin, validateRegister } from "../schemas/AuthSchema";
-import { catchAsync } from "@utils/catchAsync";
+import { catchAsync } from "@/middleware/catchAsync";
 import { AuthService } from "../services/AuthService";
 import { UserType } from "@/types/UserType";
 
