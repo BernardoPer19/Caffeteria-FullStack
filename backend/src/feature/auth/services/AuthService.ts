@@ -12,7 +12,6 @@ export class AuthService {
     if (!user) {
       throw new NotFoundError("Email no encontrado");
     }
-
     const isPasswordValid = await comparePassword(contraseña, user.contraseña);
     if (!isPasswordValid) {
       throw new UnauthorizedError("Contraseña incorrecta");

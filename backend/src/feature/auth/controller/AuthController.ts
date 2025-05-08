@@ -2,7 +2,7 @@ import { Request, Response, NextFunction, CookieOptions } from "express";
 import { validateLogin, validateRegister } from "../schemas/AuthSchema";
 import { catchAsync } from "@utils/catchAsync";
 import { AuthService } from "../services/AuthService";
-import { UserType } from "../types/AuthTypes";
+import { UserType } from "@/types/UserType";
 
 export class AuthController {
   static RegisterUser = catchAsync(
@@ -18,7 +18,7 @@ export class AuthController {
 
       res.status(201).json({
         message: "Usuario registrado exitosamente",
-        bienvenida: `Bienvenido ${newUser.email}!!`,
+        bienvenida: `Bienvenido ${newUser.nombre}!!`,
       });
     }
   );
@@ -41,7 +41,7 @@ export class AuthController {
 
       res.status(200).cookie("access_token", token, options).json({
         message: "El usuario inició sesión con éxito!",
-        welcomeMessage: `Bienvenido!!`,
+        welcomeMessage: `Bienvenido!! ${validatedData.email}`,
       });
     }
   );
@@ -55,12 +55,13 @@ export class AuthController {
   };
 
   static protectedRoute = (req: Request, res: Response) => {
-    const user = req.user as UserType | undefined;
-  
+    const user = req.user as UserType;
+    console.log(user.rol);
+    
     if (!user) {
-      return res.status(401).json({ message: "No autorizado" });
+      res.json({ message: "Usted no esta Autorizado para ingresar acá" });
     }
-  
+
     return res.status(200).json({ message: "Usuario autorizado", user });
   };
-}  
+}
