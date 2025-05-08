@@ -1,27 +1,32 @@
-import { NextFunction, Request } from "express";
-import { UserType } from "../types/AuthTypes";
-import { BadRequestError, NotFoundError } from "@/Error";
-
+import { NextFunction, Request, Response } from "express";
+import { UserType } from "@/feature/auth/types/AuthTypes";
 import jwt from "jsonwebtoken";
 import { JWT_PASSWORD } from "@/config/config";
 
+interface AuthenticatedRequest extends Request {
+  user?: UserType;
+}
+
 export const verifyRoute = (
-  req: Request,
-  res: Response & { user?: UserType },
+  req: AuthenticatedRequest,
+  res: Response,
   next: NextFunction
 ) => {
   try {
     const token = req.cookies.access_token;
 
     if (!token) {
-      throw new NotFoundError("EL token no es valido o no fue autorizado");
+      res
+        .status(401)
+        .json({ message: "No autorizado: Token no proporcionado" });
     }
 
     const decoded = jwt.verify(token, JWT_PASSWORD) as UserType;
+    console.log(decoded);
     req.user = decoded;
 
     next();
   } catch (error) {
-    throw new BadRequestError("Token no valido o expirado");
+    res.status(401).json({ message: "Token inválido o expirado" });
   }
 };

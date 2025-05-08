@@ -1,10 +1,12 @@
 import { RowDataPacket } from "mysql2";
-import {connect} from "../../../config/db/db.j";
+import {connect} from "@config/db/db.j";
 
 export class planTrabajo{
     static  controlIdPlan = async (nombrePlan : string) =>{
         try {
-            const query = `SELECT plan_id FROM reservas WHERE nombre = ?`;
+            console.log('plan',nombrePlan);
+            
+            const query = `SELECT plan_id FROM planes_tb WHERE nombre = ?`;
             const values = [nombrePlan];
 
             const [rows] = await connect.query<RowDataPacket[]>(query,values);

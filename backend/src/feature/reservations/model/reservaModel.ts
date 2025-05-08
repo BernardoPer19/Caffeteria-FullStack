@@ -1,5 +1,5 @@
 import { RowDataPacket } from "mysql2";
-import { connect } from "../../../config/db/db.j";
+import { connect } from "@/config/db/db.j";
 import { Reserva, ReservaType } from "../types/reserva";
 
 export class reservaModel {
@@ -18,20 +18,21 @@ export class reservaModel {
     }
   };
 
-  static crearReservas = async (user_id : number , data : ReservaType):Promise<string> =>{
+  static crearReservas = async (
+    user_id: number,
+    data: ReservaType
+  ): Promise<string> => {
     try {
-        const query = 'CALL sp_crear_reserva(?,?,?,?,@mensaje)';
-        const values = [user_id,data.plan_id,data.fecha_inicio,data.fecha_fin];
-        await connect.query(query,values);
-        const [[{ mensaje }]] = await connect.query<RowDataPacket[]>(
-            "SELECT @mensaje AS mensaje"
-          );
-        return mensaje;
-    } catch (error : any) {
-        console.error(error.message);
+      const query = "CALL sp_crear_reserva(?,?,?,?,@mensaje)";
+      const values = [user_id, data.plan_id, data.fecha_inicio, data.fecha_fin];
+      await connect.query(query, values);
+      const [[{ mensaje }]] = await connect.query<RowDataPacket[]>(
+        "SELECT @mensaje AS mensaje"
+      );
+      return mensaje;
+    } catch (error: any) {
+      console.error(error.message);
       throw new Error("'error al obtener las reservas de usuario");
     }
   };
-
-
 }
