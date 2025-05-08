@@ -25,11 +25,12 @@ export class reservaController {
         plan_id: idReal,
         fecha_inicio: vali.fecha_inicio,
         fecha_fin: vali.fecha_fin,
+        hora_cita : vali.hora_cita,
       } as Reserva);
 
-      res
+      res 
         .status(201)
-        .json({ message: " se creo la cita  exitosamente", newReserva });
+        .json(newReserva );
     }
   );
 }
