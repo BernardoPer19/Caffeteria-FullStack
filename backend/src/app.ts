@@ -17,17 +17,9 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/", AuthRouter);
-app.get("/", (_req, res) => {
-  res.send("hi");  
-});
 
-//reservas
-app.use('/reserva',reservaRouter);
-// admin prueba
+app.use('/',reservaRouter);
 app.use('/admin',AdminReservaRoute);
-
-//este se quita solo es  para probar el register  login en mysql 
-// app.use('/user',AuthRouter2);
 
 
 
