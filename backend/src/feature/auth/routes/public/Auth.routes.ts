@@ -7,7 +7,7 @@ const AuthRouter = Router();
 
 AuthRouter.post("/register", AuthController.RegisterUser);
 AuthRouter.post("/login", AuthController.loginUser);
-// AuthRouter.post('/logout', logoutController);
+AuthRouter.post("/logout", AuthController.logout);
 
 AuthRouter.get(
   "/protected",

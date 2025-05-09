@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { reservaModel } from "../model/reservaModel";
 import { validateReserva } from "../schema/reservaSchema";
-import { Reserva } from "../types/reserva";
+import { Reserva, ReservaType } from "../types/reserva";
 import { planTrabajo } from "../model/controlId";
 import { catchAsync } from "@/middleware/catchAsync";
 
@@ -9,6 +9,7 @@ export class reservaController {
   static obtenerTodasLasReservas = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
       const user = req.user.user_id;
+
       const resultReserva = await reservaModel.obtenerReservas(user);
       res.status(200).json(resultReserva);
     }
@@ -21,16 +22,16 @@ export class reservaController {
       const nombrePlan = vali.plan;
       const idReal = await planTrabajo.controlIdPlan(nombrePlan);
 
+      // Crear la reserva
       const newReserva = await reservaModel.crearReservas(user, {
         plan_id: idReal,
         fecha_inicio: vali.fecha_inicio,
         fecha_fin: vali.fecha_fin,
-        hora_cita : vali.hora_cita,
-      } as Reserva);
+        hora_cita: vali.hora_cita,
+      } as ReservaType);
 
-      res 
-        .status(201)
-        .json(newReserva );
+      // Retornar respuesta
+      return res.status(201).json({ message: newReserva });
     }
   );
 }

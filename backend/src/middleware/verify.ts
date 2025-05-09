@@ -14,7 +14,7 @@ export const verifyRoute = (
 ) => {
   try {
     const token = req.cookies.access_token;
-
+    
     if (!token) {
       res
         .status(401)
@@ -22,7 +22,6 @@ export const verifyRoute = (
     }
 
     const decoded = jwt.verify(token, JWT_PASSWORD) as UserType;
-    console.log(decoded);
     req.user = decoded;
 
     next();

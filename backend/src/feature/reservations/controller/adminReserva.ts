@@ -15,7 +15,7 @@ export class adminController {
 
   static deleteReservation = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
-      const reservaId = +req.params.id;
+      const reservaId =+ req.params.id; //??
       const reserva = await adminModel.eliminarUnaReserva(reservaId);
       res.status(200).json(reserva);
     }
