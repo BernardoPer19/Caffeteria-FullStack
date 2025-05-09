@@ -184,6 +184,33 @@ WHERE   c.nombre = 'Desayuno'
 
 
 
+CREATE OR REPLACE FUNCTION sp_crear_reserva(
+  i_user_id INT,
+  i_plan_id INT,
+  i_fecha_inicio DATE,
+  i_hora_cita TIME,
+  i_fecha_fin DATE
+) RETURNS TEXT AS $$
+DECLARE
+  yaExiste BOOLEAN;
+BEGIN
+  SELECT EXISTS (
+    SELECT 1 FROM reservas_tb
+    WHERE fecha_inicio = i_fecha_inicio AND hora_cita = i_hora_cita
+  ) INTO yaExiste;
+
+  IF yaExiste THEN
+    RETURN 'ya hay una reserva en esa fecha y hora';
+  ELSE
+    INSERT INTO reservas_tb (user_id, plan_id, fecha_inicio, hora_cita, fecha_fin, estado)
+    VALUES (i_user_id, i_plan_id, i_fecha_inicio, i_hora_cita, i_fecha_fin, 'pendiente');
+    RETURN 'se hizo la reserva con éxito';
+  END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
 
 
 
