@@ -22,17 +22,20 @@ export const productSchema = z.object({
     .positive({ message: "El precio debe ser un número positivo" }),
 });
 
-export const productDBSchema = productSchema.extend({
-  cafe_id: z.number(),
-});
+export const updateProductSchema = productSchema.partial();
 
-// ✅ para validación en runtime
 export const validateProduct = (input: unknown) => {
   const result = productSchema.safeParse(input);
   if (!result.success) throw result.error;
   return result.data;
 };
 
-export type ProductInput = z.infer<typeof productSchema>; // Para POST desde admin
-export type ProductFromDB = z.infer<typeof productDBSchema>; // Para datos con ID
+export const validatePartialProduct = (input: unknown) => {
+  const result = productSchema.partial().safeParse(input);
+  if (!result.success) throw result.error;
+  return result.data;
+};
+
+export type ProductInput = z.infer<typeof productSchema>;
 export type CategoriasCafes = z.infer<typeof categoriaEnum>;
+export type UpdateProductInput = z.infer<typeof updateProductSchema>;
