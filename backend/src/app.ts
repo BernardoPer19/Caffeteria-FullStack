@@ -6,6 +6,7 @@ import { errorHandler } from "./middleware/errorhandle";
 // importacion de reserva y admin
 import { reservaRouter } from "./feature/reservations/routes/public/reservas.routes";
 import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/admin.routes";
+import { ProductsRouter } from "./feature/products/routes/products.routes";
 
 //prueba despues lo borras esto
 // import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
@@ -17,15 +18,12 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/", AuthRouter);
-
-app.use('/',reservaRouter);
-app.use('/admin',AdminReservaRoute);
-
-
-
+app.use("/", reservaRouter);
+app.use("/admin", AdminReservaRoute);
+app.use("/products", ProductsRouter);
 
 // ❗️AQUÍ VA EL MIDDLEWARE DE ERRORES, DESPUÉS DE LAS RUTAS
-app.use(errorHandler) ;
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

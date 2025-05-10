@@ -27,8 +27,10 @@ export class ProductsModel {
       precio,
     } = product;
 
-    const categoriaId = await CategoriasModel.findCategoryId(categoria);
-    if (!categoriaId) throw new Error("Categoría no encontrada");
+    const categoriaIdResult = await CategoriasModel.findCategoryId(categoria);
+    if (!categoriaIdResult) throw new Error("Categoría no encontrada");
+
+    const categoriaId = categoriaIdResult.categoria_id; // Extrae el ID
 
     const query = `
       INSERT INTO productos (
@@ -40,7 +42,7 @@ export class ProductsModel {
     const values = [nombre, descripcion, sabor, img, categoriaId, pais, precio];
     const result = await pool.query(query, values);
 
-    return result.rows[0];
+    return result.rows[0]; 
   }
 
   static async findByCategory(categoria: string): Promise<ProductTypes[]> {

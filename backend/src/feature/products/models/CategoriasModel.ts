@@ -1,16 +1,20 @@
+// CategoriasModel.ts
 import { pool } from "@/config/db/dbB";
-import { Categoriasproductos } from "../types/productTypes";
 
 export class CategoriasModel {
-  static async findCategoryId(category: string): Promise<Categoriasproductos> {
+  static async findCategoryId(
+    category: string
+  ): Promise<{ categoria_id: number } | null> {
     try {
       const query = `SELECT categoria_id FROM categorias WHERE nombre = $1`;
-      const values = category;
+      const values = [category]; 
+      const categoriaResult = await pool.query(query, values);
 
-      const categoriaResult = await pool.query(query, [values]);
-      return categoriaResult.rows[0];
+      if (categoriaResult.rows.length === 0) return null;
+
+      return categoriaResult.rows[0]; // Retorna solo el campo categoria_id
     } catch (error) {
-      throw new Error("Error al crear un plan, coloca otro plan");
+      throw new Error("Error al encontrar la categoría");
     }
   }
 }

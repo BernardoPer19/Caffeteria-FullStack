@@ -1,7 +1,7 @@
 import { catchAsync } from "@/middleware/catchAsync";
 import { Request, Response, NextFunction } from "express";
 import { ProductsModel } from "../models/productsModel";
-import { validateProduct } from "../schemas/SchemaProduct";
+import { updateProductSchema, validateProduct } from "../schemas/SchemaProduct";
 
 export class ProductController {
   static getAll = catchAsync(async (_req: Request, res: Response) => {
@@ -44,7 +44,8 @@ export class ProductController {
   });
 
   static remove = catchAsync(async (req: Request, res: Response) => {
-    const { id } = req.body;
+    const { id } = req.params;
+
     if (!id) {
       return res.status(400).json({ message: "ID del producto requerido" });
     }
@@ -55,4 +56,62 @@ export class ProductController {
       message: "Producto eliminado correctamente",
     });
   });
+
+  static updateProduct = catchAsync(
+    async (req: Request, res: Response, _next: NextFunction) => {
+      const id = Number(req.params.id);
+
+      if (isNaN(id)) {
+        return res.status(400).json({
+          success: false,
+          message: "El ID debe ser un número válido",
+        });
+      }
+
+      const updateData = updateProductSchema.parse(req.body);
+
+      if (Object.keys(updateData).length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: "Debes proporcionar al menos un campo para actualizar",
+        });
+      }
+
+      const updatedProduct = await ProductsModel.update(id, updateData);
+
+      if (!updatedProduct) {
+        return res.status(404).json({
+          success: false,
+          message: "Producto no encontrado",
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: "Producto actualizado correctamente",
+        data: updatedProduct,
+      });
+    }
+  );
+
+  static getByCategory = catchAsync(
+    async (req: Request, res: Response, _next: NextFunction) => {
+      const category = req.query.categoria;
+
+      if (typeof category !== "string" || !category.trim()) {
+        return res.status(400).json({
+          success: false,
+          message: "La categoría es requerida y debe ser un string válido",
+        });
+      }
+
+      const products = await ProductsModel.findByCategory(category);
+
+      res.status(200).json({
+        success: true,
+        results: products.length,
+        data: products,
+      });
+    }
+  );
 }
