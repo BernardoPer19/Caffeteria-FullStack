@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { reservaModel } from "../model/reservaModel";
 import { validateReserva } from "../schema/reservaSchema";
-import { Reserva, ReservaType } from "../types/reserva";
+import {  ReservaType } from "../types/reserva";
 import { planTrabajo } from "../model/controlId";
 import { catchAsync } from "@/middleware/catchAsync";
 
