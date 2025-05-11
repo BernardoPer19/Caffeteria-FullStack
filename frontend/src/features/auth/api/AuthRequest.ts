@@ -54,7 +54,8 @@ export const loginRequest = async (
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
       // Captura el mensaje del backend
-      const backendMessage = error.response.data?.message || "Error desconocido";
+      const backendMessage =
+        error.response.data?.message || "Error desconocido";
       throw new Error(backendMessage); // Lanzalo para que lo maneje tu toast u otro lugar
     }
 
@@ -71,9 +72,9 @@ export const logoutRequest = async () => {
   }
 };
 
-export const verifyUserRequest = async (): Promise<UserType> => {
+export const getCurrentUserRequest = async (): Promise<UserType> => {
   try {
-    const response = await axios.get("/verify");
+    const response = await axios.get("/me");
     return response.data.user;
   } catch (error) {
     if (error instanceof Error) {

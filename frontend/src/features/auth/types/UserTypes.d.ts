@@ -1,4 +1,4 @@
-type Roles = "Usuario" | "Admin" | "Empleado";
+type Roles = "usuario" | "admin" | "empleado";
 
 export interface UserType {
   user_id: number;

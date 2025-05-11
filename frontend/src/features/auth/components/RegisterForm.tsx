@@ -1,17 +1,11 @@
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { zodResolver } from "../../../utils/resolverZod";
-import type { PublicRegisterType } from "../schema/RegisterSchema";
-import { publicRegisterRequest } from "../api/AuthRequest";
-
-// Esquema con zod
-const registerSchema = z.object({
-  nombre: z.string().min(3, "Nombre requerido"),
-  email: z.string().email("Correo inválido"),
-  contraseña: z.string().min(6, "Mínimo 6 caracteres"),
-});
+import {
+  RegisterSchema,
+  type PublicRegisterType,
+} from "../schema/RegisterSchema";
+import { Link } from "react-router-dom";
+import { useAuthForm } from "../hooks/useAuth";
 
 export function RegisterForm() {
   const {
@@ -20,25 +14,16 @@ export function RegisterForm() {
     formState: { errors, isSubmitting },
     reset,
   } = useForm<PublicRegisterType>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(RegisterSchema),
   });
 
-  const mutation = useMutation({
-    mutationFn: publicRegisterRequest,
-    onSuccess: (data) => {
-      toast.success(data.message);
-      console.log(data.bienvenida);
-      reset();
-    },
-    onError: (error: Error) => {
-      toast.error(error.message);
-    },
-  });
+  const {
+    register: { registerMutate },
+  } = useAuthForm();
 
   const onSubmit = (data: PublicRegisterType) => {
-    console.log(data);
-
-    mutation.mutate(data);
+    registerMutate(data);
+    reset();
   };
 
   return (
@@ -102,6 +87,16 @@ export function RegisterForm() {
         >
           {isSubmitting ? "Registrando..." : "Registrarse"}
         </button>
+        <p className="text-[#a67c52] font-semibold text-[16px] text-center mt-2">
+          ya tiene una cuenta?
+          {
+            <Link to="/login">
+              <span className=" text-[#a67c52] underline rounded-md m-auto px-1 py-1">
+                Iniciar sesion
+              </span>
+            </Link>
+          }
+        </p>
       </form>
     </div>
   );
