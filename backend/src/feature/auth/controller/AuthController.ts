@@ -12,6 +12,7 @@ export class AuthController {
       _next: NextFunction
     ) => {
       const validatedData = validateRegister(req.body);
+
       const isAdmin = !!validatedData.rol;
 
       const newUser = await AuthService.registerUser(validatedData, isAdmin);
@@ -39,10 +40,13 @@ export class AuthController {
         maxAge: 24 * 60 * 60 * 1000,
       };
 
-      res.status(200).cookie("access_token", token, options).json({
-        message: "El usuario inició sesión con éxito!",
-        welcomeMessage: `Bienvenido!! ${validatedData.email}`,
-      });
+      res
+        .status(200)
+        .cookie("access_token", token, options)
+        .json({
+          message: "El usuario inició sesión con éxito!",
+          welcomeMessage: `Bienvenido!! ${validatedData.email}`,
+        });
     }
   );
 
@@ -56,8 +60,7 @@ export class AuthController {
 
   static protectedRoute = (req: Request, res: Response) => {
     const user = req.user as UserType;
-    console.log(user.rol);
-    
+
     if (!user) {
       res.json({ message: "Usted no esta Autorizado para ingresar acá" });
     }
