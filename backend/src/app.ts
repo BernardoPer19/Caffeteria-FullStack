@@ -27,7 +27,7 @@ app.use("/", reservaRouter);
 app.use("/admin", AdminReservaRoute);
 app.use("/products", ProductsRouter);
 
-// ❗️AQUÍ VA EL MIDDLEWARE DE ERRORES, DESPUÉS DE LAS RUTAS
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {

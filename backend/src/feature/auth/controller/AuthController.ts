@@ -13,6 +13,7 @@ export class AuthController {
     ) => {
       const validatedData = validateRegister(req.body);
 
+      console.log(validatedData);
       const isAdmin = !!validatedData.rol;
 
       const newUser = await AuthService.registerUser(validatedData, isAdmin);
@@ -45,7 +46,7 @@ export class AuthController {
         .cookie("access_token", token, options)
         .json({
           message: "El usuario inició sesión con éxito!",
-          welcomeMessage: `Bienvenido!! ${validatedData.email}`,
+          bienvenida: `Bienvenido!! ${validatedData.email}`,
         });
     }
   );

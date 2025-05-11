@@ -1,6 +1,7 @@
+// middlewares/errorHandler.ts
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
-
+import { AppError } from "@/utils/AppError";
 
 export const errorHandler = (
   err: unknown,
@@ -8,6 +9,7 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ) => {
+  // Errores de validación con Zod
   if (err instanceof ZodError) {
     const errors = err.errors.map((e) => ({
       path: e.path.join("."),
@@ -20,15 +22,18 @@ export const errorHandler = (
     });
   }
 
-  if (err instanceof Error) {
-    return res.status(500).json({
+  // Errores personalizados
+  if (err instanceof AppError) {
+    return res.status(err.statusCode).json({
       success: false,
       message: err.message,
     });
   }
 
+  // Error inesperado
+  console.error("❌ Error inesperado:", err);
   return res.status(500).json({
     success: false,
-    message: "Unknown error",
+    message: "Error interno del servidor",
   });
 };
