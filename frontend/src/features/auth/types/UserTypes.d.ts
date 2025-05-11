@@ -15,4 +15,10 @@ type admincRegisterType = Omit<UserType, "user_id" | "fechaCreacion">;
 
 type LoginType = Omit<UserType, "user_id" | "fechaCreacion" | "rol" | "nombre">;
 
+export type RegisterSuccessResponse = {
+  message: string;
+  bienvenida: string;
+};
+
+
 export { publicRegisterType, LoginType, admincRegisterType };

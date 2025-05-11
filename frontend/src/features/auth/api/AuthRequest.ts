@@ -5,8 +5,9 @@ import type {
 } from "../schema/RegisterSchema";
 import type {
   admincRegisterType,
-  LoginType,
-  publicRegisterType,
+  // LoginType,
+  // publicRegisterType,
+  RegisterSuccessResponse,
   UserType,
 } from "../types/UserTypes";
 import type { LoginUserType } from "../schema/LoginSchema";
@@ -14,13 +15,13 @@ import { AxiosError } from "axios";
 
 export const publicRegisterRequest = async (
   data: PublicRegisterType
-): Promise<publicRegisterType> => {
+): Promise<RegisterSuccessResponse> => {
   try {
-    const res = await axios.post<publicRegisterType>("/register", data);
+    const res = await axios.post<RegisterSuccessResponse>("/register", data);
     return res.data;
   } catch (error) {
     console.log(error);
-    
+
     if (error instanceof AxiosError && error.response) {
       const backendMessage = error.response.data?.errors || error.message;
       throw new Error(backendMessage);
@@ -44,17 +45,20 @@ export const adminRegister = async (
   }
 };
 
-export const login = async (data: LoginUserType): Promise<LoginType> => {
+export const loginRequest = async (
+  data: LoginUserType
+): Promise<RegisterSuccessResponse> => {
   try {
-    const res = await axios.post("/login", data);
+    const res = await axios.post<RegisterSuccessResponse>("/login", data);
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
-      const backendMessage = error.response.data?.message || error.message;
-      throw new Error(backendMessage);
+      // Captura el mensaje del backend
+      const backendMessage = error.response.data?.message || "Error desconocido";
+      throw new Error(backendMessage); // Lanzalo para que lo maneje tu toast u otro lugar
     }
 
-    throw new Error("Error desconocido al iniciar sesion.");
+    throw new Error("Error desconocido al iniciar sesión.");
   }
 };
 

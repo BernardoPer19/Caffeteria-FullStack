@@ -25,8 +25,9 @@ export function RegisterForm() {
 
   const mutation = useMutation({
     mutationFn: publicRegisterRequest,
-    onSuccess: () => {
-      toast.success("Registro exitoso 🎉");
+    onSuccess: (data) => {
+      toast.success(data.message);
+      console.log(data.bienvenida);
       reset();
     },
     onError: (error: Error) => {

@@ -24,6 +24,3 @@ export const validateRegisterPublic = (input: unknown) =>
 
 export const validateRegisterAdmin = (input: unknown): AdminRegisterType =>
   validateWithSchema(RegisterUserSchemaAdmin, input);
-
-
-
