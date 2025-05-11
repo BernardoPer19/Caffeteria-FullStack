@@ -7,15 +7,20 @@ import { errorHandler } from "./middleware/errorhandle";
 import { reservaRouter } from "./feature/reservations/routes/public/reservas.routes";
 import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/admin.routes";
 import { ProductsRouter } from "./feature/products/routes/products.routes";
-
+import cors from "cors";
 //prueba despues lo borras esto
 // import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
 
 const app = express();
 const PORT = 3000;
-
-app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/", AuthRouter);
 app.use("/", reservaRouter);
