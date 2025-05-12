@@ -7,8 +7,12 @@ import { errorHandler } from "./middleware/errorhandle";
 import { reservaRouter } from "./feature/reservations/routes/public/reservas.routes";
 import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/admin.routes";
 
+
+//importacion de las ordenes
+import { ordenRoute } from "./feature/ordenes/routes/public/orden.routes";
+
 //prueba despues lo borras esto
-// import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
+ import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
 
 const app = express();
 const PORT = 3000;
@@ -21,17 +25,20 @@ app.get("/", (_req, res) => {
   res.send("hi");  
 });
 
+//ordenes user
+app.use('/orden',ordenRoute)
+
 //reservas
 app.use('/reserva',reservaRouter);
 // admin prueba
 app.use('/admin',AdminReservaRoute);
 
 //este se quita solo es  para probar el register  login en mysql 
-// app.use('/user',AuthRouter2);
+ app.use('/user',AuthRouter2);
 
 
 
-
+ 
 // ❗️AQUÍ VA EL MIDDLEWARE DE ERRORES, DESPUÉS DE LAS RUTAS
 app.use(errorHandler) ;
 

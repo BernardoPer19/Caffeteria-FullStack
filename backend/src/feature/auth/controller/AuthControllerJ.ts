@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
 import { validateLogin, validateRegister } from "../schemas/AuthSchema";
-import { catchAsync } from "@utils/catchAsync";
+import { catchAsync } from "@/middleware/catchAsync";
 import { AuthService2 } from "../services/AutherviceJ";
-import { UserType } from "../types/AuthTypes";
+import { UserType } from "@/types/UserType";
 
 export class AuthController2 {
   static RegisterUser = catchAsync(
@@ -11,13 +11,14 @@ export class AuthController2 {
       res: Response<{ message: string; bienvenida?: string }>,
       _next: NextFunction
     ) => {
+      
       const validatedData = validateRegister(req.body);
-      const isAdmin = !!validatedData.rol;
-
+      const isAdmin = !!validatedData.rol;  
+   
       const newUser = await AuthService2.registerUser(validatedData, isAdmin);
 
       res.status(201).json({
-        message: "Usuario registrado exitosamente",
+        message: "Usuario registrado exitosamente",        
         bienvenida: `Bienvenido ${newUser.email}!!`,
       });
     }
@@ -35,7 +36,7 @@ export class AuthController2 {
       const options: CookieOptions = {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        sameSite: "strict",
         maxAge: 24 * 60 * 60 * 1000,
       };
 
