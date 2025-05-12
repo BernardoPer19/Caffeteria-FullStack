@@ -1,18 +1,19 @@
-import { useAuthContext } from "../features/auth/context/AuthContext";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuthContext } from "../features/auth/context/AuthContext";
+import type { Roles } from "@/features/auth/types/UserTypes";
 
 interface Props {
-  requiredRole?: "admin" | "empleado" | "cliente";
+  allowedRoles: Roles[];
 }
 
-export function ProtectedRoute({ requiredRole }: Props) {
+export function ProtectedRoute({ allowedRoles }: Props) {
   const { isAuthenticated, user } = useAuthContext();
-  console.log(isAuthenticated);
 
-  if (!isAuthenticated && user?.rol == "admin")
+  if (!isAuthenticated || !user || !user.rol) {
     return <Navigate to="/login" replace />;
+  }
 
-  if (requiredRole && user?.rol !== requiredRole) {
+  if (!allowedRoles.includes(user.rol)) {
     return <Navigate to="/unauthorized" replace />;
   }
 

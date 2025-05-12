@@ -1,8 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
-import { loginRequest, publicRegisterRequest } from "../api/AuthRequest";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  loginRequest,
+  publicRegisterRequest,
+} from "../api/AuthRequest";
 import { toast } from "sonner";
 
 export const useAuthForm = () => {
+  const queryClient = useQueryClient(); // Accede al cliente de consultas
+
   const handleSuccess = (message: string, bienvenida?: string) => {
     toast.success(message);
     if (bienvenida) console.log(bienvenida);
@@ -27,6 +32,8 @@ export const useAuthForm = () => {
     mutationFn: loginRequest,
     onSuccess: (data) => {
       handleSuccess(data.message, data.bienvenida);
+      // Aquí invalidamos la query para obtener el usuario actual
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
     },
     onError: (error) => {
       handleError("inicio de sesión", error);
@@ -43,11 +50,14 @@ export const useAuthForm = () => {
     mutationFn: publicRegisterRequest,
     onSuccess: (data) => {
       handleSuccess(data.message, data.bienvenida);
+      // También invalidamos la query después del registro
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
     },
     onError: (error) => {
       handleError("registro", error);
     },
   });
+
 
   return {
     login: {
@@ -64,5 +74,6 @@ export const useAuthForm = () => {
       registerError,
       resetRegister,
     },
+ 
   };
 };

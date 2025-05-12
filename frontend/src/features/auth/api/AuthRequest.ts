@@ -53,10 +53,9 @@ export const loginRequest = async (
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
-      // Captura el mensaje del backend
       const backendMessage =
         error.response.data?.message || "Error desconocido";
-      throw new Error(backendMessage); // Lanzalo para que lo maneje tu toast u otro lugar
+      throw new Error(backendMessage);
     }
 
     throw new Error("Error desconocido al iniciar sesión.");
@@ -64,19 +63,15 @@ export const loginRequest = async (
 };
 
 export const logoutRequest = async () => {
-  try {
-    const response = await axios.get("/logout");
-    return response.data;
-  } catch (error) {
-    console.log("Error en logout:", error);
-  }
+  const response = await axios.post("/logout");
+  return response.data;
 };
 
 export const getCurrentUserRequest = async (): Promise<UserType> => {
   try {
-    const response = await axios.get("/me");
+    const response = await axios.get("/");
     console.log(response);
-    
+
     return response.data;
   } catch (error) {
     if (error instanceof Error) {
