@@ -12,8 +12,14 @@ AuthRouter.post("/logout", AuthController.logout);
 AuthRouter.get(
   "/protected",
   verifyRoute,
-  permisionRoles("Admin"),
   AuthController.protectedRoute
+);
+
+AuthRouter.get(
+  "/me",
+  verifyRoute,
+  permisionRoles("usuario"),
+  AuthController.getCurrentUser
 );
 
 export default AuthRouter;

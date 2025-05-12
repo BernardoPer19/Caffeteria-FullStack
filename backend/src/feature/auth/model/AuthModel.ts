@@ -11,7 +11,6 @@ export class AuthModel {
     isAdmin: boolean
   ): Promise<UserType> {
     try {
-      //con el "newUser.rol!" aseguramos que el rol no sera undefinied o null
       const rolName = isAdmin ? newUser.rol! : "usuario";
       const rolId = await RolModel.getRol(rolName);
 

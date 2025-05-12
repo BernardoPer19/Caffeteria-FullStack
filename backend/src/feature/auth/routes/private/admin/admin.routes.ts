@@ -10,58 +10,64 @@ AdminRoute.get("/dashboard", () => {});
 AdminRoute.post(
   "/register-admin",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
+
+
 
 
 
 AdminRoute.get(
   "/allUsers",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
 AdminRoute.post(
   "/allUsers",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
 AdminRoute.delete(
   "/allUsers/:id",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
 AdminRoute.put(
   "/allUsers",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
+
+
+
+
 
 AdminRoute.get(
   "/allEmployees",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
 AdminRoute.post(
   "/allEmployees",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
 AdminRoute.delete(
   "/allEmployees/:id",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
 AdminRoute.put(
   "/allEmployees",
   verifyRoute,
-  permisionRoles("Admin"),
+  permisionRoles("admin"),
   () => {}
 );
