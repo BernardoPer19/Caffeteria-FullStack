@@ -1,4 +1,4 @@
-import axios from "./axios";
+import axios from "../../../utils/axios";
 import type {
   AdminRegisterType,
   PublicRegisterType,
@@ -75,7 +75,9 @@ export const logoutRequest = async () => {
 export const getCurrentUserRequest = async (): Promise<UserType> => {
   try {
     const response = await axios.get("/me");
-    return response.data.user;
+    console.log(response);
+    
+    return response.data;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error("No autorizado. Inicia sesión.");
