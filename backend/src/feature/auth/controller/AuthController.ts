@@ -68,4 +68,13 @@ export class AuthController {
 
     return res.status(200).json({ message: "Usuario autorizado", user });
   };
+
+  static getCurrentUser = (req: Request, res: Response) => {
+    try {
+      const user = req.user;
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener usuario actual" });
+    }
+  };
 }

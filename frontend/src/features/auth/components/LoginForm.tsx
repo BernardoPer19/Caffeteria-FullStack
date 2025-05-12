@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { Toaster } from "sonner";
 import { zodResolver } from "../../../utils/resolverZod";
-import { loginRequest } from "../api/AuthRequest";
 import { LoginSchema, type LoginUserType } from "../schema/LoginSchema";
+import { Link } from "react-router-dom";
+import { useAuthForm } from "../hooks/useAuth";
 
 export function LoginForm() {
   const {
@@ -15,22 +15,13 @@ export function LoginForm() {
     resolver: zodResolver(LoginSchema),
   });
 
-  const mutation = useMutation({
-    mutationFn: loginRequest,
-    onSuccess: (data) => {
-      toast.success(data.message);
-      console.log(data.bienvenida); 
-      reset();
-    },
-    onError: (error: Error) => {
-      console.log("Error en login:", error.message);
-      toast.error(error.message);
-    },
-  });
+  const {
+    login: { loginMutate },
+  } = useAuthForm();
 
   const onSubmit = (data: LoginUserType) => {
-    console.log("Datos enviados:", data); // Para verificar los datos enviados
-    mutation.mutate(data);
+    loginMutate(data);
+    reset();
   };
 
   return (
@@ -39,6 +30,13 @@ export function LoginForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="bg-[#f6f1eb] rounded-2xl shadow-xl p-8 w-full max-w-md border border-[#c8b6a6]"
       >
+        <Toaster
+          theme="dark"
+          closeButton
+          position="top-right"
+          className="bg-red-300"
+          duration={3000}
+        />
         <h2 className="text-3xl font-bold text-[#5c4033] mb-6 text-center">
           Iniciar Sesión
         </h2>
@@ -80,6 +78,17 @@ export function LoginForm() {
         >
           {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
         </button>
+
+        <p className="text-[#a67c52] font-semibold text-[16px] text-center mt-2">
+          No tiene una cuenta?
+          {
+            <Link to="/register">
+              <span className=" text-[#a67c52] underline rounded-md m-auto px-1 py-1">
+                Registrate
+              </span>
+            </Link>
+          }
+        </p>
       </form>
     </div>
   );

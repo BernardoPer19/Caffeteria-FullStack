@@ -5,7 +5,12 @@ function RegisterPage() {
   return (
     <div>
       <RegisterForm />
-      <Toaster />
+      <Toaster
+        theme="dark"
+        closeButton
+        position="top-right"
+        className="bg-red-300"
+      />
     </div>
   );
 }
