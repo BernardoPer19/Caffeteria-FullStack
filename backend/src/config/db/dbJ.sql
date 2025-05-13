@@ -7,13 +7,20 @@ CREATE TABLE users_tb(
 	
 );
 
-CREATE TABLE ordenesUser_tb(
+CREATE TABLE ordenes_tb(
 	orden_id INT AUTO_INCREMENT PRIMARY KEY,
 	user_id INT NOT NULL,
 	total DECIMAL(2,1) NOT NULL,
 	estado ENUM('pendiente' , 'pagado', 'enviado')NOT NULL DEFAULT('pendiente'),
-	fecha_creacion DATE NOT NULL
-);
+	fecha_creacion DATE NOT NULL,
+	direccion_orden VARCHAR(250) NOT NULL,
+	cantidad_productos INT NOT NULL ,
+	cafe_id INT NOT NULL ,
+	FOREIGN KEY (user_id) REFERENCES users_tb(user_id) ON UPDATE CASCADE,
+	FOREIGN KEY (cafe_id) REFERENCES productos_tb(cafe_id) ON UPDATE CASCADE
+)
+
+
 
 CREATE TABLE reservas_tb (
 	reserva_id INT AUTO_INCREMENT PRIMARY KEY,

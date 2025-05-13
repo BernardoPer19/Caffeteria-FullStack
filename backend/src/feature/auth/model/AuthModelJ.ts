@@ -1,7 +1,7 @@
-import { connect } from "@config/db/db.j";
-import { UserType } from "../types/AuthTypes";
+import { connect } from "@/config/db/db.j";
+import { UserType } from "@/types/UserType";
 import { RolModel2 } from "./AuthRolJ";
-import { hashPassword } from "../utils/AuthUtil";
+import { hashPassword } from "../utils/authUtilsJ";
 import { MixedUserType } from "../schemas/AuthSchema";
 import { RowDataPacket } from "mysql2";
 

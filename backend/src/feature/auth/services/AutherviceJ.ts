@@ -1,6 +1,6 @@
 import { BadRequestError, NotFoundError, UnauthorizedError } from "@/Error";
 import { AuthModel2 } from "../model/AuthModelJ";
-import { comparePassword, createToken } from "../utils/AuthUtil";
+import { comparePassword,createToken } from "../utils/authUtilsJ";
 import { JwtPayload } from "jsonwebtoken";
 import { RegisterType } from "../types/AuthTypes";
 
