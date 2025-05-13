@@ -28,7 +28,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const {
     data: user,
     isLoading: isAuthLoading,
-    error,
+    // error,
   } = useQuery<UserType, AxiosError>({
     queryKey: ["currentUser"],
     queryFn: getCurrentUserRequest,
@@ -55,9 +55,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsAuthenticated(!isAuthLoading && !!user);
   }, [user, isAuthLoading]);
 
-  if (error) {
-    console.error("❌ Error al obtener el usuario:", error.message);
-  }
+  // if (error) {
+  //   console.error("❌ Error al obtener el usuario:", error.message);
+  // }
 
   return (
     <AuthContext.Provider
