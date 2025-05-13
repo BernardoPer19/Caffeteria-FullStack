@@ -11,8 +11,8 @@ export const RegisterSchema = z.object({
 export const RegisterUserSchemaPublic = RegisterSchema.extend({
   rol: z.enum(["usuario", "empleado", "admin"]).default("usuario"),
 });
-export type PublicRegisterType = z.infer<typeof RegisterUserSchemaPublic>;
 
+export type PublicRegisterType = z.infer<typeof RegisterUserSchemaPublic>;
 export type AdminRegisterType = z.infer<typeof RegisterUserSchemaAdmin>;
 
 export const RegisterUserSchemaAdmin = RegisterSchema.extend({

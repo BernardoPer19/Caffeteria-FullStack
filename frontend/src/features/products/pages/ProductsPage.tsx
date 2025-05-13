@@ -1,52 +1,85 @@
 import { useProducts } from "../hooks/useFetchData";
+import { ShoppingCart, Eye, Coffee } from "lucide-react"; // íconos modernos
 
 function ProductsPage() {
   const { products } = useProducts();
 
   if (products.isLoading)
-    return <p className="text-center text-xl">Cargando...</p>;
+    return <p className="text-center text-xl font-medium mt-10">Cargando...</p>;
+
   if (products.isError)
     return (
-      <p className="text-center text-red-500">
+      <p className="text-center text-red-500 font-medium mt-10">
         Error: {products.error?.message}
       </p>
     );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6 bg-[#f8f4f1] min-h-screen">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-6 bg-[#f4eee7] min-h-screen font-sans">
       {products.productsData?.map((prods) => (
         <div
           key={prods.cafe_id}
-          className="bg-[#fffaf4] rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 border border-[#e8dfd7]"
+          className="bg-[#fffaf4] rounded-3xl shadow-md hover:shadow-2xl transition duration-300 border border-[#e8dfd7] overflow-hidden flex flex-col"
         >
-          <img
-            src={prods.img}
-            alt={prods.nombre}
-            className="w-full h-48 object-cover rounded-t-2xl"
-          />
-          <div className="p-4">
-            <h2 className="text-xl font-semibold text-[#5e3b1d]">
-              {prods.nombre}
-            </h2>
-            <p className="text-[#7c5c3d] text-sm mb-2 italic">
-              {prods.descripcion}
-            </p>
+          <div className="overflow-hidden">
+            <img
+              src={prods.img}
+              alt={prods.nombre}
+              className="w-full h-52 object-cover hover:scale-105 transition-transform duration-300"
+            />
+          </div>
 
-            <div className="flex flex-col gap-1 text-sm text-[#6b4c32]">
-              <span>
-                <strong>Origen:</strong> {prods.pais}
-              </span>
-              <span>
-                <strong>Sabor:</strong> {prods.sabor}
-              </span>
-              <span>
-                <strong>Categoría:</strong> {prods.categoria}
+          <div className="p-5 flex flex-col justify-between flex-grow">
+            <div>
+              <h2 className="text-2xl font-semibold text-[#4b2e1f] mb-1">
+                {prods.nombre}
+              </h2>
+              <p className="text-[#6b4c32] text-sm mb-3 italic">
+                {prods.descripcion}
+              </p>
+
+              <div className="flex flex-wrap gap-2 text-xs text-[#7d5a44] mb-4">
+                <span className="bg-[#e8dfd7] px-2 py-1 rounded-full">
+                  Origen: {prods.pais}
+                </span>
+                <span className="bg-[#e8dfd7] px-2 py-1 rounded-full">
+                  Sabor: {prods.sabor}
+                </span>
+                <span className="bg-[#e8dfd7] px-2 py-1 rounded-full">
+                  {prods.categoria}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between mt-2">
+              <span className="text-[#4b2e1f] text-lg font-bold">
+                ${prods.precio}
               </span>
             </div>
 
-            <button className="mt-4 w-full py-2 rounded-xl bg-[#b77e58] text-white font-medium hover:bg-[#9c6746] transition-colors">
-              Añadir al carrito
-            </button>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              <button
+                title="Añadir al carrito"
+                className="flex items-center justify-center gap-1 px-2 py-2 bg-[#6f4e37] hover:bg-[#5a3f2d] text-white rounded-xl text-sm transition-colors"
+              >
+                <ShoppingCart size={16} />
+                <span className="hidden sm:inline">Carrito</span>
+              </button>
+              <button
+                title="Hacer pedido"
+                className="flex items-center justify-center gap-1 px-2 py-2   bg-[#b77e58] hover:bg-[#9c6746] text-white rounded-xl text-sm transition-colors"
+              >
+                <Coffee size={16} />
+                <span className="hidden sm:inline">Pedir</span>
+              </button>
+              <button
+                title="Ver más detalles"
+                className="flex items-center justify-center gap-1 px-2 py-2 bg-[#d7c0a5] hover:bg-[#c6a98d] text-[#4b2e1f] rounded-xl text-sm transition-colors"
+              >
+                <Eye size={16} />
+                <span className="hidden sm:inline">Ver más</span>
+              </button>
+            </div>
           </div>
         </div>
       ))}
