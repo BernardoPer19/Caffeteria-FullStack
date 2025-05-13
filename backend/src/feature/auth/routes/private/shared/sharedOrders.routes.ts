@@ -9,24 +9,24 @@ SharedOrdersRouter.get("/reservations", () => {});
 SharedOrdersRouter.get(
   "/orders",
   verifyRoute,
-  permisionRoles("Admin", "Empleado"),
+  permisionRoles("admin", "empleado"),
   () => {}
 );
 SharedOrdersRouter.post(
   "/orders",
   verifyRoute,
-  permisionRoles("Admin", "Empleado"),
+  permisionRoles("admin", "empleado"),
   () => {}
 );
 SharedOrdersRouter.delete(
   "/orders/:id",
   verifyRoute,
-  permisionRoles("Admin", "Empleado"),
+  permisionRoles("admin", "empleado"),
   () => {}
 );
 SharedOrdersRouter.put(
   "/orders",
   verifyRoute,
-  permisionRoles("Admin", "Empleado"),
+  permisionRoles("admin", "empleado"),
   () => {}
 );

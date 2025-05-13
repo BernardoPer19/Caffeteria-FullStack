@@ -52,11 +52,16 @@ export class AuthController {
   );
 
   static logout = (_req: Request, res: Response) => {
-    res.clearCookie("access_token", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
+    try {
+      res.clearCookie("access_token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Asegúrate de que solo en producción se use secure
+        sameSite: "strict",
+      });
+      res.status(200).send({ message: "Sesión cerrada correctamente" });
+    } catch (error) {
+      res.status(500).send({ error: "Error al cerrar sesión" });
+    }
   };
 
   static protectedRoute = (req: Request, res: Response) => {
