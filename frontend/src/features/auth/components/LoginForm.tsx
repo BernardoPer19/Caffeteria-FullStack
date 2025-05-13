@@ -2,9 +2,8 @@ import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
 import { zodResolver } from "../../../utils/resolverZod";
 import { LoginSchema, type LoginUserType } from "../schema/LoginSchema";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthForm } from "../hooks/useAuth";
-
 
 export function LoginForm() {
   const {
@@ -16,13 +15,22 @@ export function LoginForm() {
     resolver: zodResolver(LoginSchema),
   });
 
+  const navigate = useNavigate();
   const {
     login: { loginMutate },
   } = useAuthForm();
 
   const onSubmit = (data: LoginUserType) => {
-    loginMutate(data);
-    reset();
+    loginMutate(data, {
+      onSuccess: () => {
+        navigate("/perfil");
+        reset();
+      },
+      // Opcional: manejar errores
+      onError: (error) => {
+        console.error("Error al iniciar sesión:", error);
+      },
+    });
   };
 
   return (

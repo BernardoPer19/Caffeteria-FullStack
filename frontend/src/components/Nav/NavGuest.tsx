@@ -1,14 +1,35 @@
 import { NavLink } from "react-router-dom";
 
-export function NavGuest() {
+interface Props {
+  mobile?: boolean;
+}
+
+export function NavGuest({ mobile }: Props) {
+  const linkClass = mobile
+    ? "block py-1 text-sm"
+    : "hover:text-[#a67c52] transition";
   return (
     <>
-      <NavLink to="/" className="hover:text-[#a67c52] transition">
+      <NavLink
+        to="/"
+        className={`hover:text-[#a67c52] transition ${linkClass}`}
+      >
         Inicio
       </NavLink>
-      <NavLink to="/sobre-nosotros" className="hover:text-[#a67c52] transition">
+      <NavLink
+        to="/sobre-nosotros"
+        className={`hover:text-[#a67c52] transition ${linkClass}`}
+      >
         Sobre Nosotros
       </NavLink>
+
+      <NavLink
+        to="/sobre-nosotros"
+        className={`hover:text-[#a67c52] transition ${linkClass}`}
+      >
+        Productos
+      </NavLink>
+
     </>
   );
 }
