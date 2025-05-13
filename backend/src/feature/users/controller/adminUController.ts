@@ -1,5 +1,5 @@
 import { validateUserByAdmin } from "../schema/userSchema";
-import { adminUserModel } from "../model/adminUserModel";
+import { AdminUserModel } from "../model/adminUserModel";
 import { Request, Response, NextFunction } from "express";
 import { catchAsync } from "../../../middleware/catchAsync";
 import { AdminUserTypes } from "../types/admin";
@@ -11,7 +11,7 @@ export class adminUserController {
       res: Response,
       _next: NextFunction
     ): Promise<void> => {
-      const result = await adminUserModel.obtenerTodosLosUsuarios();
+      const result = await AdminUserModel.obtenerTodosLosUsuarios();
       res.status(200).json({
         status: "success",
         data: result,
@@ -22,7 +22,7 @@ export class adminUserController {
   static addUser = catchAsync(
     async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
       const vali = validateUserByAdmin(req.body);
-      const result = await adminUserModel.agregarUsuarios(vali);
+      const result = await AdminUserModel.agregarUsuarios(vali);
       res.status(201).json({
         status: "succes",
         data: result,
@@ -34,7 +34,7 @@ export class adminUserController {
     async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
       const user_id = +req.params.id;
 
-      const result = await adminUserModel.eliminarAdminUser(user_id);
+      const result = await AdminUserModel.eliminarAdminUser(user_id);
       res.status(201).json({
         status: "success",
         data: result,
@@ -47,7 +47,7 @@ export class adminUserController {
       const user_id = +req.params.id;
       const vali = validateUserByAdmin(req.body);
 
-      const result = await adminUserModel.actualizarAdminUser(user_id, {
+      const result = await AdminUserModel.actualizarAdminUser(user_id, {
         nombre: vali.nombre,
         email: vali.email,
         contraseña: vali.contraseña,

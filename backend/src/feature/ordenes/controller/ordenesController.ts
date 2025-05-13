@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { catchAsync } from "@/middleware/catchAsync";
-import { ordeModel } from "../model/ordenModel";
+import { ordenModel } from "../model/ordenModel";
 import { validateOrden } from "../schema/ordenesSchema";
 import { OrdenTypeFull } from "../types/ordenType";
 
@@ -8,7 +8,9 @@ export class ordenController {
   static obtenerOrdenes = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
       const user = req.user.user_id;
-      const ordenUser = await ordeModel.obtenerOrdenes(user);
+      console.log(req.body);
+      
+      const ordenUser = await ordenModel.obtenerOrdenes(user);
       res.status(200).json({
         status: "success",
         data: ordenUser,
@@ -19,7 +21,7 @@ export class ordenController {
   static crearOrden = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
       const vali = validateOrden(req.body);
-      const orden = await ordeModel.crearOrden({
+      const orden = await ordenModel.crearOrden({
         user: vali.user,
         cafe: vali.cafe,
         direccion_orden: vali.direccion_orden,
@@ -37,7 +39,7 @@ export class ordenController {
       const user = req.user.user_id;
       const ordenes = +req.params.id;
 
-      const orden = await ordeModel.eliminarOrden(user, ordenes);
+      const orden = await ordenModel.eliminarOrden(user, ordenes);
       res.status(201).json({
         status: "success",
         data: orden,
@@ -51,7 +53,7 @@ export class ordenController {
       const orden = +req.params.id;
       const vali = validateOrden(req.body);
 
-      const ordenUser = await ordeModel.actualizarOrden(user, orden, {
+      const ordenUser = await ordenModel.actualizarOrden(user, orden, {
         user: vali.user,
         cafe: vali.cafe,
         direccion_orden: vali.direccion_orden,

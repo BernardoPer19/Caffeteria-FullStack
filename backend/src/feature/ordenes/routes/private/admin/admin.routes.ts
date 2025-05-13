@@ -5,7 +5,7 @@ import { verifyRoute } from "@/middleware/verify";
 
 export const adminRoute = Router();
 
-adminRoute.get("/",verifyRoute,permisionRoles("admin"),ordenController.obtenerOrdenes);
-adminRoute.post("/",verifyRoute,permisionRoles("admin"),ordenController.crearOrden);
-adminRoute.put("/:id", verifyRoute,permisionRoles("admin"),ordenController.actualizarOrden);
-adminRoute.delete("/:id",verifyRoute,permisionRoles("admin"),ordenController.eliminarOrden);
+adminRoute.get("/orden",verifyRoute,permisionRoles("admin"),ordenController.obtenerOrdenes);
+adminRoute.post("/orden",verifyRoute,permisionRoles("admin"),ordenController.crearOrden);
+adminRoute.put("/orden/:id", verifyRoute,permisionRoles("admin"),ordenController.actualizarOrden);
+adminRoute.delete("/orden/:id",verifyRoute,permisionRoles("admin"),ordenController.eliminarOrden);   

@@ -1,60 +1,55 @@
-import { connect } from "@/config/db/db.j";
 import { AdminUserTypes, PutAdminType } from "../types/admin";
-import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { AdminUserType } from "../schema/userSchema";
 import { RolModel } from "@/feature/auth/model/AuthRol";
+import { pool } from "@/config/db/dbB";
 
-export class adminUserModel {
-  static obtenerTodosLosUsuarios = async (): Promise<AdminUserTypes[]> => {
+export class AdminUserModel {
+  static async obtenerTodosLosUsuarios(): Promise<AdminUserTypes[]> {
     const query = "SELECT * FROM users_tb";
-    const [rows] = await connect.query(query);
-    return rows as AdminUserTypes[];
-  };
+    const { rows } = await pool.query(query);
+    return rows;
+  }
 
-  static agregarUsuarios = async (
-    data: AdminUserType
-  ): Promise<AdminUserTypes> => {
+  static async agregarUsuarios(data: AdminUserType): Promise<AdminUserTypes> {
     try {
       const { rol } = data;
       const rol_id = await RolModel.getRol(rol);
 
       const query = `
-      INSERT INTO users_tb(nombre, email, contraseña, fechaCreacion, rol_id)
-      VALUES(?, ?, ?, NOW(), ?);
-    `;
+        INSERT INTO users_tb(nombre, email, contraseña, fecha_creacion, rol_id)
+        VALUES ($1, $2, $3, NOW(), $4)
+        RETURNING user_id, email, nombre, contraseña, fecha_creacion, rol_id;
+      `;
       const values = [data.nombre, data.email, data.contraseña, rol_id];
-      const [result] = await connect.query<ResultSetHeader>(query, values);
-      const user_id = result.insertId;
-      const [rows] = await connect.query<RowDataPacket[]>(
-        "SELECT user_id, email, nombre, contraseña, fechaCreacion, rol_id FROM users_tb WHERE user_id = ?",
-        [user_id]
-      );
+      const { rows } = await pool.query(query, values);
 
       const user = rows[0];
       return {
         ...user,
-        rol: rol,
-      } as AdminUserTypes;
-    } catch (error: any) {
-      throw new Error(error.message || "Error en la DB");
+        rol,
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+      throw new Error("Error desconocido en la base de datos");
     }
-  };
+  }
 
-  static eliminarAdminUser = async (
+  static async eliminarAdminUser(
     user_id: number
-  ): Promise<{ message: string } | null> => {
-    const query = "DELETE FROM users_tb WHERE user_id = ?";
-    const [rows] = await connect.query<ResultSetHeader>(query, [user_id]);
-    if (rows.affectedRows === 0) {
-      return null;
-    }
-    return { message: "se elimino el usuario con exito" };
-  };
+  ): Promise<{ message: string } | null> {
+    const query = "DELETE FROM users_tb WHERE user_id = $1";
+    const result = await pool.query(query, [user_id]);
 
-  static actualizarAdminUser = async (
-    user: number,
+    if (result.rowCount === 0) return null;
+    return { message: "Se eliminó el usuario con éxito" };
+  }
+
+  static async actualizarAdminUser(
+    user_id: number,
     data: Partial<PutAdminType>
-  ): Promise<{ message: string } | null> => {
+  ): Promise<{ message: string } | null> {
     const dataCopia = { ...data };
 
     if (dataCopia.rol) {
@@ -63,21 +58,22 @@ export class adminUserModel {
       (dataCopia as any).rol_id = rol_id;
     }
 
-    const partes = Object.keys(dataCopia)
-      .map((llaveOrden) => `\`${llaveOrden}\` = ?`)
-      .join(", ");
-    const values = Object.values(dataCopia);
-    if (partes.length === 0) {
-      throw new Error("no hay campos para actualizar");
+    const keys = Object.keys(dataCopia);
+    if (keys.length === 0) {
+      throw new Error("No hay campos para actualizar");
     }
 
-    const query = `UPDATE users_tb  SET ${partes} WHERE user_id = ?`;
-    const [result] = await connect.query<ResultSetHeader>(query, [
-      ...values,
-      user,
-    ]);
+    const setters = keys
+      .map((key, index) => `"${key}" = $${index + 1}`)
+      .join(", ");
+    const values = Object.values(dataCopia);
 
-    if (result.affectedRows === 0) return null;
-    return { message: "se actualizo con exito" };
-  };
+    const query = `UPDATE users_tb SET ${setters} WHERE user_id = $${
+      keys.length + 1
+    }`;
+    const result = await pool.query(query, [...values, user_id]);
+
+    if (result.rowCount === 0) return null;
+    return { message: "Se actualizó con éxito" };
+  }
 }
