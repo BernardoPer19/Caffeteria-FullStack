@@ -12,7 +12,7 @@ import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/a
 import { ordenRoute } from "./feature/ordenes/routes/public/orden.routes";
 
 // para los users
-import { adminUserRoute } from "./feature/users/routes/private/adminUser.routes";
+import { adminUserRoute } from "./feature/users/routes/private/admin/adminUser.routes";
 
 // para el admin
 import { adminRoute } from "./feature/ordenes/routes/private/admin/admin.routes";
