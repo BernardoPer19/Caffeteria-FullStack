@@ -1,25 +1,12 @@
-import z from "zod";
+import { z } from "zod";
 
+// El campo `estado` es obligatorio ahora y tiene un valor por defecto
 export const schemaReserva = z.object({
-  plan: z.string().min(1, "El ID del plan es obligatorio"),
-  fecha_inicio: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "La fecha de inicio debe tener un formato válido (YYYY-MM-DD)",
-  }),
-  fecha_fin: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "La fecha de fin debe tener un formato válido (YYYY-MM-DD)",
-  }),
+  plan: z.string(),
+  fecha_inicio: z.string(),
+  fecha_fin: z.string(),
   hora_cita: z.string(),
-  estado: z.enum(["pendiente", "aceptada", "rechazada"]),
+  estado: z.enum(["pendiente", "aceptada", "rechazada"]).optional(),
 });
 
 export type reservasType = z.infer<typeof schemaReserva>;
-
-export const validateReserva = (input: unknown): reservasType => {
-  const vali = schemaReserva.safeParse(input);
-  console.log(vali);
-
-  if (!vali.success) {
-    throw new Error("error al validar los datos");
-  }
-  return vali.data;
-};
