@@ -20,7 +20,7 @@ export function NavGuest({ mobile }: Props) {
         to="/sobre-nosotros"
         className={`hover:text-[#a67c52] transition ${linkClass}`}
       >
-        Nosotros
+        Sobre Nosotros
       </NavLink>
 
       <NavLink
