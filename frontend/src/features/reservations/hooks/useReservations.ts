@@ -47,24 +47,18 @@ export const useReservations = () => {
       queryClient.invalidateQueries({ queryKey: ["reservasUsuario"] });
     },
     onError: (error) => {
-      console.log(error);
-
       handleError("Error al crear la reserva", error);
     },
   });
 
   return {
-    getData: {
-      reservations,
-      isFetchingReservations,
-      fetchError,
-    },
+    reservations,
+    isFetchingReservations,
+    fetchError,
 
-    createData: {
-      createReservation,
-      isCreatingReservation,
-      createError,
-    },
+    createReservation,
+    isCreatingReservation,
+    createError,
 
     refetch,
   };

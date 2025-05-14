@@ -30,7 +30,7 @@ app.use("/", reservaRouter);
 
 app.use("/products", ProductsRouter);
 app.use("/orden", ordenRoute);
-app.use("/reservations", reservaRouter);
+app.use("/reserva", reservaRouter);
 
 app.use("/admin", adminUserRoute);
 app.use("/admin", adminRoute);

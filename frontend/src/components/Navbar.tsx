@@ -47,12 +47,7 @@ export function Navbar() {
           )}
           {!isAuthenticated && <NavGuest />}
           {isEmpleado && <NavEmpleado />}
-          {isAdmin && (
-            <>
-              <NavGuest />
-              <NavAdmin />
-            </>
-          )}
+          {isAdmin && <NavAdmin />}
           <NavAuthActions isAuthenticated={isAuthenticated} />
         </nav>
       </div>

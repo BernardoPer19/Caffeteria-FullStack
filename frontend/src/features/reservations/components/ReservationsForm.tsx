@@ -1,22 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useReservations } from "../hooks/useReservations";
+import { useReservations } from "../hooks/useReservations"; // ✅ Ajustá la ruta si es necesario
 import { schemaReserva, type reservasType } from "../schema/ReservasSchema";
-import type { NuevaReservaInput, PlanNombre } from "../types/ReservationsTypes";
+import type { NuevaReservaInput } from "../types/ReservationsTypes";
 
-// Opciones de planes como strings
-const PLAN_OPTIONS = [
-  "Ir a trabajar",
-  "Estudiar solo",
-  "Estudiar con amigos",
-  "Cita",
-  "Reunión informal",
-  "Trabajo freelance",
-  "Lectura personal",
-  "Plan Otro",
-];
-
-const ReservationsForm = () => {
+function ReservationsForm() {
   const {
     register,
     handleSubmit,
@@ -25,27 +13,25 @@ const ReservationsForm = () => {
   } = useForm<reservasType>({
     resolver: zodResolver(schemaReserva),
     defaultValues: {
-      plan: "",
-      fecha_inicio: "",
-      fecha_fin: "",
-      hora_cita: "",
-      estado: "pendiente", // No opcional, ya es predeterminado aquí
+      estado: "pendiente",
     },
   });
 
-  const { createData } = useReservations();
+  const { createReservation, isCreatingReservation } = useReservations();
 
   const onSubmit = (data: reservasType) => {
     const formattedData: NuevaReservaInput = {
-      plan: data.plan as PlanNombre,
+      plan_id: Number(data.plan),
       fecha_inicio: data.fecha_inicio,
       fecha_fin: data.fecha_fin,
       hora_cita: data.hora_cita,
-      estado: data.estado || "pendiente", // Aseguramos un valor predeterminado válido
+      estado: data.estado,
     };
 
-    createData.createReservation(formattedData, {
-      onSuccess: () => reset(),
+    createReservation(formattedData, {
+      onSuccess: () => {
+        reset();
+      },
     });
   };
 
@@ -60,7 +46,7 @@ const ReservationsForm = () => {
 
       {/* Plan */}
       <div>
-        <label className="block text-sm font-medium text-[#5e3b1d] mb-1">
+        <label className="block font-medium text-sm text-[#5e3b1d] mb-1">
           Plan
         </label>
         <select
@@ -68,20 +54,17 @@ const ReservationsForm = () => {
           className="w-full border rounded-xl p-2 focus:outline-none focus:ring-2 focus:ring-[#b77e58]"
         >
           <option value="">Selecciona un plan</option>
-          {PLAN_OPTIONS.map((plan) => (
-            <option key={plan} value={plan}>
-              {plan}
-            </option>
-          ))}
+          <option value="1">Plan Básico</option>
+          <option value="2">Plan Premium</option>
         </select>
         {errors.plan && (
           <p className="text-red-500 text-sm mt-1">{errors.plan.message}</p>
         )}
       </div>
 
-      {/* Fecha de inicio */}
+      {/* Fecha inicio */}
       <div>
-        <label className="block text-sm font-medium text-[#5e3b1d] mb-1">
+        <label className="block font-medium text-sm text-[#5e3b1d] mb-1">
           Fecha de inicio
         </label>
         <input
@@ -96,9 +79,9 @@ const ReservationsForm = () => {
         )}
       </div>
 
-      {/* Fecha de fin */}
+      {/* Fecha fin */}
       <div>
-        <label className="block text-sm font-medium text-[#5e3b1d] mb-1">
+        <label className="block font-medium text-sm text-[#5e3b1d] mb-1">
           Fecha de fin
         </label>
         <input
@@ -113,9 +96,9 @@ const ReservationsForm = () => {
         )}
       </div>
 
-      {/* Hora de la cita */}
+      {/* Hora de cita */}
       <div>
-        <label className="block text-sm font-medium text-[#5e3b1d] mb-1">
+        <label className="block font-medium text-sm text-[#5e3b1d] mb-1">
           Hora de la cita
         </label>
         <input
@@ -130,14 +113,29 @@ const ReservationsForm = () => {
         )}
       </div>
 
+      {/* Estado */}
+      <div>
+        <label className="block font-medium text-sm text-[#5e3b1d] mb-1">
+          Estado
+        </label>
+        <select
+          {...register("estado")}
+          className="w-full border rounded-xl p-2"
+        >
+          <option value="pendiente">Pendiente</option>
+          <option value="aceptada">Aceptada</option>
+          <option value="rechazada">Rechazada</option>
+        </select>
+      </div>
+
       {/* Botones */}
       <div className="flex justify-between gap-2 pt-4">
         <button
           type="submit"
-          disabled={createData.isCreatingReservation}
+          disabled={isCreatingReservation}
           className="flex-1 bg-[#5e3b1d] hover:bg-[#452c14] text-white py-2 px-4 rounded-xl transition"
         >
-          {createData.isCreatingReservation ? "Enviando..." : "Reservar"}
+          {isCreatingReservation ? "Enviando..." : "Reservar"}
         </button>
         <button
           type="button"
@@ -149,6 +147,6 @@ const ReservationsForm = () => {
       </div>
     </form>
   );
-};
+}
 
 export default ReservationsForm;
