@@ -5,32 +5,33 @@ import { ProductTypes } from "../types/productTypes";
 
 export class ProductsModel {
   static async findAll(): Promise<ProductTypes[]> {
-    const query = `SELECT * FROM productos`;
+    const query = ` 
+        SELECT p.nombre, p.descripcion, p.sabor, p.img, c.categoria, p.pais, p.precio 
+      FROM productos p 
+      INNER JOIN categorias c ON p.categoria_id = c.categoria_id`;
     const result = await pool.query(query);
     return result.rows;
   }
 
   static async findById(productId: number): Promise<ProductTypes | null> {
-    const query = `SELECT * FROM productos WHERE cafe_id = $1`;
+    const query = `
+    SELECT p.nombre, p.descripcion, p.sabor, p.img, c.categoria, p.pais, p.precio 
+      FROM productos p 
+      INNER JOIN categorias c ON p.categoria_id = c.categoria_id
+    
+      WHERE cafe_id = $1`;
     const result = await pool.query(query, [productId]);
     return result.rows[0] ?? null;
   }
 
   static async create(product: ProductInput): Promise<ProductTypes> {
-    const {
-      nombre,
-      descripcion,
-      sabor,
-      categoria,
-      img,
-      pais,
-      precio,
-    } = product;
+    const { nombre, descripcion, sabor, categoria, img, pais, precio } =
+      product;
 
     const categoriaIdResult = await CategoriasModel.findCategoryId(categoria);
     if (!categoriaIdResult) throw new Error("Categoría no encontrada");
 
-    const categoriaId = categoriaIdResult.categoria_id; // Extrae el ID
+    const categoriaId = categoriaIdResult.categoria_id;
 
     const query = `
       INSERT INTO productos (
@@ -42,7 +43,7 @@ export class ProductsModel {
     const values = [nombre, descripcion, sabor, img, categoriaId, pais, precio];
     const result = await pool.query(query, values);
 
-    return result.rows[0]; 
+    return result.rows[0];
   }
 
   static async findByCategory(categoria: string): Promise<ProductTypes[]> {

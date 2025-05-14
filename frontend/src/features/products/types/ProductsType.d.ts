@@ -1,7 +1,7 @@
 export interface ProductTypes {
   cafe_id: number;
   nombre: string;
-  descricion: string;
+  descripcion: string;
   sabor: string;
   categoria: Categoriasproductos;
   img: string;

@@ -24,12 +24,11 @@ export function NavGuest({ mobile }: Props) {
       </NavLink>
 
       <NavLink
-        to="/sobre-nosotros"
+        to="/products"
         className={`hover:text-[#a67c52] transition ${linkClass}`}
       >
         Productos
       </NavLink>
-
     </>
   );
 }
