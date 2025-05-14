@@ -28,18 +28,15 @@ app.use(cookieParser());
 app.use("/", AuthRouter);
 app.use("/", reservaRouter);
 
-
-
 app.use("/products", ProductsRouter);
 app.use("/orden", ordenRoute);
 app.use("/reserva", reservaRouter);
-
 
 app.use("/admin", adminUserRoute);
 app.use("/admin", adminRoute);
 app.use("/admin", AdminReservaRoute);
 app.use("/admin", AdminReservaRoute);
-    
+
 app.use(errorHandler);
 
 app.listen(PORT, () => {

@@ -22,7 +22,6 @@ export class reservaController {
       const nombrePlan = vali.plan;
       const idReal = await planTrabajo.controlIdPlan(nombrePlan);
 
-      // Crear la reserva
       const newReserva = await reservaModel.crearReservas(user, {
         plan_id: idReal,
         fecha_inicio: vali.fecha_inicio,
@@ -30,7 +29,6 @@ export class reservaController {
         hora_cita: vali.hora_cita,
       } as ReservaType);
 
-      // Retornar respuesta
       return res.status(201).json({ message: newReserva });
     }
   );

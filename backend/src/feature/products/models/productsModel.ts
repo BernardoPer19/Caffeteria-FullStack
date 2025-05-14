@@ -6,9 +6,9 @@ import { ProductTypes } from "../types/productTypes";
 export class ProductsModel {
   static async findAll(): Promise<ProductTypes[]> {
     const query = ` 
-    SELECT p.nombre, p.descripcion, p.sabor, p.img, c.categoria, p.pais, p.precio 
+        SELECT p.nombre, p.descripcion, p.sabor, p.img, c.categoria, p.pais, p.precio 
       FROM productos p 
-    INNER JOIN categorias c ON p.categoria_id = c.categoria_id`;
+      INNER JOIN categorias c ON p.categoria_id = c.categoria_id`;
     const result = await pool.query(query);
     return result.rows;
   }
