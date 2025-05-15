@@ -13,7 +13,6 @@ import AdminEmpleados from "./features/users/pages/AdminEmpleados";
 import ProductosAdmin from "./features/products/pages/ProductosAdmin";
 import Perfil from "./features/profile/page/Perfil";
 import ProductsPage from "./features/products/pages/ProductsPage";
-import UserReservas from "./features/reservations/pages/UserReservas";
 
 function App() {
   return (
@@ -27,7 +26,6 @@ function App() {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/products" element={<ProductsPage />} />
-            <Route path="/reservas" element={<UserReservas />} />
 
             {/* Rutas protegidas para admin */}
             <Route
