@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
 
 interface Props {
   mobile?: boolean;
@@ -31,12 +30,7 @@ export function NavCliente({ mobile }: Props) {
         Perfil
       </NavLink>
 
-      <div className="relative cursor-pointer">
-        <ShoppingCart className="w-6 h-6 hover:text-[#a67c52] transition" />
-        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-          3
-        </span>
-      </div>
+      
     </>
   );
 }

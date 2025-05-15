@@ -1,3 +1,4 @@
+
 import { NavLink } from "react-router-dom";
 
 interface Props {
@@ -29,6 +30,8 @@ export function NavGuest({ mobile }: Props) {
       >
         Productos
       </NavLink>
+
+
     </>
   );
 }

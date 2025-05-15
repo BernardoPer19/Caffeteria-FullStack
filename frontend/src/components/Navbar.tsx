@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, ShoppingCart, X } from "lucide-react";
 import { NavGuest } from "./Nav/NavGuest";
 import { NavEmpleado } from "./Nav/NavEmpleado";
 import { NavAdmin } from "./Nav/NavAdmin";
@@ -54,6 +54,13 @@ export function Navbar() {
             </>
           )}
           <NavAuthActions isAuthenticated={isAuthenticated} />
+
+          <div className="relative cursor-pointer">
+            <ShoppingCart className="w-6 h-6 hover:text-[#a67c52] transition" />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+              3
+            </span>
+          </div>
         </nav>
       </div>
 
