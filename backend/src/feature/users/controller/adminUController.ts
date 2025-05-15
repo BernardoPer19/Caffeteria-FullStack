@@ -1,17 +1,18 @@
 import { validateUserByAdmin } from "../schema/userSchema";
 import { adminUserModel } from "../model/adminUserModel";
 import { Request, Response, NextFunction } from "express";
-import { catchAsync } from "../../../middleware/catchAsync";
+import { catchAsync } from "@/middleware/catchAsync";
 import { AdminUserTypes } from "../types/admin";
 
 export class adminUserController {
-  static getAll = catchAsync(
+  static getAllUserByRol = catchAsync(
     async (
-      _req: Request,
+      req: Request,
       res: Response,
       _next: NextFunction
     ): Promise<void> => {
-      const result = await adminUserModel.obtenerTodosLosUsuarios();
+      const rol = req.params.query;
+      const result = await adminUserModel.obtenerTodosLosUsuariosPorRol(rol);
       res.status(200).json({
         status: "success",
         data: result,

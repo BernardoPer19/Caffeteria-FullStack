@@ -49,7 +49,7 @@ app.use('/admin',AdminReservaRoute);
 
 
 //este se quita solo es  para probar el register  login en mysql 
- //app.use('/user',AuthRouter2);
+// app.use('/user',AuthRouter2);
 
 
 

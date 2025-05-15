@@ -8,5 +8,4 @@ export const HOST_DB = process.env.HOST_DB || "localhost";
 export const PORT_DB = process.env.PORT_DB || 5432;
 
 export const SALTS_ROUNDS = process.env.SALTS_ROUNDS || 10;
-export const JWT_PASSWORD =
-  process.env.JWT_PASSWORD || "contraseña_secreta_para_la_web";
+export const JWT_PASSWORD =process.env.JWT_PASSWORD || "contraseña_secreta_para_la_web";

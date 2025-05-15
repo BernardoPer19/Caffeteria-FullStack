@@ -1,15 +1,19 @@
 import { connect } from "@/config/db/db.j";
-import { AdminUserTypes, PutAdminType } from "../types/admin";
+import { AdminUserTypes, GetFiltroUserRol, PutAdminType } from "../types/admin";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { AdminUserType } from "../schema/userSchema";
 import { RolModel } from "@/feature/auth/model/AuthRol";
 
 export class adminUserModel {
-  static obtenerTodosLosUsuarios = async (): Promise<AdminUserTypes[]> => {
-    const query = "SELECT * FROM users_tb";
-    const [rows] = await connect.query(query);
-    return rows as AdminUserTypes[];
-  };
+ 
+
+  static obtenerTodosLosUsuariosPorRol = async  (userNombreRol : string):Promise<GetFiltroUserRol[]> =>{
+      const query = `SELECT u.user_id  as idUsuario,u.nombre , u.email, r.rol FROM users_tb u 
+                        INNER JOIN roles_tb r ON u.rol_id = r.rol_id
+                        WHERE r.rol = "?";`;
+      const [rows] = await connect.query(query,[userNombreRol]);
+      return rows as GetFiltroUserRol[]
+  }
 
   static agregarUsuarios = async (
     data: AdminUserType
