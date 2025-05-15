@@ -2,7 +2,6 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RegisterPage from "./features/auth/pages/RegisterPage";
 import { LoginForm } from "./features/auth/components/LoginForm";
-import { Navbar } from "./components/Navbar";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./features/auth/context/AuthContext";
 import Unauthorized from "./features/auth/pages/Unauthorized";
@@ -13,13 +12,14 @@ import AdminEmpleados from "./features/users/pages/AdminEmpleados";
 import ProductosAdmin from "./features/products/pages/ProductosAdmin";
 import Perfil from "./features/profile/page/Perfil";
 import ProductsPage from "./features/products/pages/ProductsPage";
+import HeaderWithCart from "./components/HeaderWithCart";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <AuthProvider>
-          <Navbar />
+          <HeaderWithCart />
           <Routes>
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginForm />} />

@@ -7,8 +7,10 @@ import { NavAdmin } from "./Nav/NavAdmin";
 import { NavAuthActions } from "./Nav/NavAuthActions";
 import { useAuthContext } from "../features/auth/context/AuthContext";
 import { NavCliente } from "./Nav/NavUsuario";
+import { useCart } from "../features/products/context/CartContext";
 
 export function Navbar() {
+  const { items, toggleCart } = useCart();
   const { isAuthenticated, user } = useAuthContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -17,7 +19,9 @@ export function Navbar() {
   const isAdmin = user?.rol === "admin";
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
 
+  console.log(items.length);
   return (
     <header className="bg-[#f6f1eb] shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -50,11 +54,13 @@ export function Navbar() {
           {isAdmin && <NavAdmin />}
           <NavAuthActions isAuthenticated={isAuthenticated} />
 
-          <div className="relative cursor-pointer">
+          <div className="relative cursor-pointer" onClick={toggleCart}>
             <ShoppingCart className="w-6 h-6 hover:text-[#a67c52] transition" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-              3
-            </span>
+            {items.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {totalQuantity}
+              </span>
+            )}
           </div>
         </nav>
       </div>

@@ -1,6 +1,7 @@
-import React, {
+import {
   createContext,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -10,9 +11,11 @@ type CartItem = ProductTypes & { quantity: number };
 
 type CartContextType = {
   items: CartItem[];
-  addItem: (item: CartItem) => void;
-  removeItem: (id: string) => void;
+  addItem: (item: ProductTypes) => void;
+  removeItem: (cafe_id: number) => void;
   clearCart: () => void;
+  toggleCart: () => void;
+  isCartOpen: boolean;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -30,28 +33,45 @@ type CartProviderProps = {
 };
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(() => {
+    const stored = localStorage.getItem("cartItems");
+    return stored ? JSON.parse(stored) : [];
+  });
 
-  const addItem = (item: CartItem) => {
-    setItems((prev) =>
-      prev.some((i) => i.cafe_id === item.cafe_id)
-        ? prev.map((i) =>
-            i.cafe_id === item.cafe_id
-              ? { ...i, quantity: i.quantity + item.quantity }
-              : i
-          )
-        : [...prev, item]
-    );
+  // 💾 sincronizar carrito con localStorage cada vez que cambie
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(items));
+  }, [items]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const addItem = (product: ProductTypes) => {
+    console.log("Añadiendo producto:", product.cafe_id);
+
+    setItems((prev) => {
+      const existing = prev.find((item) => item.cafe_id === product.cafe_id);
+      if (existing) {
+        console.log("Producto ya existe, sumando 1.");
+        return prev.map((item) =>
+          item.cafe_id === product.cafe_id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
   };
 
-  const removeItem = (id: string) => {
+  const removeItem = (id: number) => {
     setItems((prev) => prev.filter((i) => i.cafe_id !== Number(id)));
   };
 
   const clearCart = () => setItems([]);
 
+  const toggleCart = () => setIsCartOpen((prev) => !prev);
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, clearCart }}>
+    <CartContext.Provider
+      value={{ items, addItem, removeItem, clearCart, toggleCart, isCartOpen }}
+    >
       {children}
     </CartContext.Provider>
   );

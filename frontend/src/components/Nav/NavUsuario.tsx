@@ -28,17 +28,8 @@ export function NavCliente({ mobile }: Props) {
       >
         Cafés
       </NavLink>
-<<<<<<< HEAD
 
       
-=======
-      <div className="relative cursor-pointer">
-        <ShoppingCart className="w-6 h-6 hover:text-[#a67c52] transition" />
-        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-          3
-        </span>
-      </div>
->>>>>>> ca361bcb46f0a00de54b6918a5d03e4922f161cd
     </>
   );
 }
