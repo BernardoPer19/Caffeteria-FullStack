@@ -23,10 +23,10 @@ export function NavCliente({ mobile }: Props) {
         Órdenes
       </NavLink>
       <NavLink
-        to="/cafes"
+        to="/perfil"
         className={`hover:text-[#a67c52] transition ${linkClass}`}
       >
-        Cafés
+        Perfil
       </NavLink>
 
       

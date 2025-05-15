@@ -26,6 +26,7 @@ function App() {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/unauthorized" element={<Unauthorized />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/reservas" element={<AdminReservas />} />
 
             {/* Rutas protegidas para admin */}
             <Route

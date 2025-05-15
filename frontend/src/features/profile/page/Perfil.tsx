@@ -1,8 +1,11 @@
 import React from 'react'
+import ProfileComponent from '../components/ProfileCard'
 
 function Perfil() {
   return (
-    <div>Perfil</div>
+    <div>
+      <ProfileComponent/>
+    </div>
   )
 }
 

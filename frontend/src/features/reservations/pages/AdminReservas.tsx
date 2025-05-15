@@ -1,8 +1,11 @@
 import React from 'react'
+import ReservationsForm from '../components/ReservationsForm'
 
 function AdminReservas() {
   return (
-    <div>AdminReservas</div>
+    <div>
+      <ReservationsForm/>
+    </div>
   )
 }
 
