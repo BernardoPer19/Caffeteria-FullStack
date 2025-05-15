@@ -1,14 +1,16 @@
-import { AdminUserTypes, PutAdminType } from "../types/admin";
+import { AdminUserTypes, GetFiltroUserRol, PutAdminType } from "../types/admin";
 import { AdminUserType } from "../schema/userSchema";
 import { RolModel } from "@/feature/auth/model/AuthRol";
 import { pool } from "@/config/db/dbB";
 
-export class AdminUserModel {
-  static async obtenerTodosLosUsuarios(): Promise<AdminUserTypes[]> {
-    const query = "SELECT * FROM users_tb";
-    const { rows } = await pool.query(query);
-    return rows;
-  }
+export class adminUserModel {
+  static obtenerTodosLosUsuarios = async  (userNombreRol : string):Promise<GetFiltroUserRol[]> => {
+    const query = `SELECT u.user_id  as idUsuario,u.nombre , u.email, r.rol FROM users_tb u 
+                          INNER JOIN roles_tb r ON u.rol_id  = r.rol_id
+                          WHERE r.rol = $1;`;
+    const {rows} = await pool.query(query,[userNombreRol]);
+    return rows as AdminUserTypes[];
+  };
 
   static async agregarUsuarios(data: AdminUserType): Promise<AdminUserTypes> {
     try {

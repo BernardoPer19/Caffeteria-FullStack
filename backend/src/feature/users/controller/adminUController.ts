@@ -1,17 +1,25 @@
 import { validateUserByAdmin } from "../schema/userSchema";
-import { AdminUserModel } from "../model/adminUserModel";
+import { adminUserModel } from "../model/adminUserModel";
 import { Request, Response, NextFunction } from "express";
-import { catchAsync } from "../../../middleware/catchAsync";
+import { catchAsync } from "@/middleware/catchAsync";
 import { AdminUserTypes } from "../types/admin";
 
 export class adminUserController {
-  static getAll = catchAsync(
+static getAllUserByRol = catchAsync(
     async (
-      _req: Request,
+      req: Request,
       res: Response,
       _next: NextFunction
     ): Promise<void> => {
-      const result = await AdminUserModel.obtenerTodosLosUsuarios();
+      const {rol} = req.query;
+      if (typeof rol !== "string") {
+        res
+          .status(400)
+          .json({ message: "La especialidad  debe ser un string" });
+        return;
+      }     
+
+      const result = await adminUserModel.obtenerTodosLosUsuarios(rol);
       res.status(200).json({
         status: "success",
         data: result,
@@ -22,7 +30,7 @@ export class adminUserController {
   static addUser = catchAsync(
     async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
       const vali = validateUserByAdmin(req.body);
-      const result = await AdminUserModel.agregarUsuarios(vali);
+      const result = await adminUserModel.agregarUsuarios(vali);
       res.status(201).json({
         status: "succes",
         data: result,
@@ -34,7 +42,7 @@ export class adminUserController {
     async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
       const user_id = +req.params.id;
 
-      const result = await AdminUserModel.eliminarAdminUser(user_id);
+      const result = await adminUserModel.eliminarAdminUser(user_id);
       res.status(201).json({
         status: "success",
         data: result,
@@ -47,7 +55,7 @@ export class adminUserController {
       const user_id = +req.params.id;
       const vali = validateUserByAdmin(req.body);
 
-      const result = await AdminUserModel.actualizarAdminUser(user_id, {
+      const result = await adminUserModel.actualizarAdminUser(user_id, {
         nombre: vali.nombre,
         email: vali.email,
         contraseña: vali.contraseña,

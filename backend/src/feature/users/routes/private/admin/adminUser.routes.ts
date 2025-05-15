@@ -7,7 +7,7 @@ export const adminUserRoute = Router();
 adminUserRoute.get(
   "/user",verifyRoute,
   permisionRoles("admin"),
-  adminUserController.getAll
+  adminUserController.getAllUserByRol
 );
 adminUserRoute.post(
   "/user",verifyRoute,

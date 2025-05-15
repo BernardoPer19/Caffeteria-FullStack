@@ -14,3 +14,5 @@ export interface AdminUserTypes {
 }
 
 export type PutAdminType = Omit<AdminUserTypes, "user_id">;
+
+export type GetFiltroUserRol = Omit<AdminUserTypes , "contraseña" | "fechaCreacion">;
