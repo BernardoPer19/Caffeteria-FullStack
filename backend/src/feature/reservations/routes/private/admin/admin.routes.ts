@@ -5,6 +5,21 @@ import { verifyRoute } from "@/middleware/verify";
 
 export const AdminReservaRoute = Router();
 
-AdminReservaRoute.get("/reservation",verifyRoute, permisionRoles("admin"),adminController.getAllReservations);
-AdminReservaRoute.delete( "/reservation/:id",verifyRoute,permisionRoles("admin"),adminController.deleteReservation);
-AdminReservaRoute.put("/reservation/:id",verifyRoute,permisionRoles("admin"),adminController.updateReserva);
+AdminReservaRoute.get(
+  "/admin/reservation",
+  verifyRoute,
+  permisionRoles("admin"),
+  adminController.getAllReservations
+);
+AdminReservaRoute.delete(
+  "/admin/reservation/:id",
+  verifyRoute,
+  permisionRoles("admin"),
+  adminController.deleteReservation
+);
+AdminReservaRoute.put(
+  "/admin/reservation/:id",
+  verifyRoute,
+  permisionRoles("admin"),
+  adminController.updateReserva
+);

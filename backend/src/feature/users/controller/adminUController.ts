@@ -5,14 +5,21 @@ import { catchAsync } from "@/middleware/catchAsync";
 import { AdminUserTypes } from "../types/admin";
 
 export class adminUserController {
-  static getAllUserByRol = catchAsync(
+static getAllUserByRol = catchAsync(
     async (
       req: Request,
       res: Response,
       _next: NextFunction
     ): Promise<void> => {
-      const rol = req.params.query;
-      const result = await adminUserModel.obtenerTodosLosUsuariosPorRol(rol);
+      const {rol} = req.query;
+      if (typeof rol !== "string") {
+        res
+          .status(400)
+          .json({ message: "La especialidad  debe ser un string" });
+        return;
+      }     
+
+      const result = await adminUserModel.obtenerTodosLosUsuarios(rol);
       res.status(200).json({
         status: "success",
         data: result,

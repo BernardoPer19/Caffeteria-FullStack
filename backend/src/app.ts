@@ -6,56 +6,38 @@ import { errorHandler } from "./middleware/errorhandle";
 // importacion de reserva y admin
 import { reservaRouter } from "./feature/reservations/routes/public/reservas.routes";
 import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/admin.routes";
-
-
-//importacion de las ordenes
-import { ordenRoute } from "./feature/ordenes/routes/public/orden.routes";
-
-// para los users
+import { ProductsRouter } from "./feature/products/routes/products.routes";
+import cors from "cors";
 import { adminUserRoute } from "./feature/users/routes/private/admin/adminUser.routes";
-
-// para el admin
+import { ordenRoute } from "./feature/ordenes/routes/public/orden.routes";
 import { adminRoute } from "./feature/ordenes/routes/private/admin/admin.routes";
-
 //prueba despues lo borras esto
- //import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
+//import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
 
 const app = express();
 const PORT = 3000;
-
-app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/", AuthRouter);
-app.get("/", (_req, res) => {
-  res.send("hi");  
-});
+app.use("/", reservaRouter);
 
+app.use("/products", ProductsRouter);
+app.use("/orden", ordenRoute);
+app.use("/reserva", reservaRouter);
 
-// users admin 
-app.use('/admin', adminUserRoute)
+app.use("/admin", adminUserRoute);
+app.use("/admin", adminRoute);
+app.use("/admin", AdminReservaRoute);
+app.use("/admin", AdminReservaRoute);
 
-//ordenes user
-app.use('/orden',ordenRoute)
-// admin routes
-app.use('/admin',adminRoute)
-
-//reservas
-app.use('/reserva',reservaRouter);
-// admin prueba reservas
-app.use('/admin',AdminReservaRoute);
-
-
-
-
-//este se quita solo es  para probar el register  login en mysql 
-// app.use('/user',AuthRouter2);
-
-
-
- 
-// ❗️AQUÍ VA EL MIDDLEWARE DE ERRORES, DESPUÉS DE LAS RUTAS
-app.use(errorHandler) ;
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

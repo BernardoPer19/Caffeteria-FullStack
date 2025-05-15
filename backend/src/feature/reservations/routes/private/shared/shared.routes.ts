@@ -4,6 +4,15 @@ import { verifyRoute } from "@/middleware/verify";
 
 const SharedReservaRoutes = Router();
 
-SharedReservaRoutes.get("/reservas", verifyRoute,permisionRoles("admin","empleado"),() => {});
-SharedReservaRoutes.post("/reservas",verifyRoute,permisionRoles("admin","empleado"), () => {});
-
+SharedReservaRoutes.get(
+  "/admin/reservas",
+  verifyRoute,
+  permisionRoles("admin", "empleado"),
+  () => {}
+);
+SharedReservaRoutes.post(
+  "/admin/reservas",
+  verifyRoute,
+  permisionRoles("admin", "empleado"),
+  () => {}
+);

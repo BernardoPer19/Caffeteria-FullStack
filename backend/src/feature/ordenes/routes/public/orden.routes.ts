@@ -7,4 +7,4 @@ export const ordenRoute = Router();
 ordenRoute.get("/",verifyRoute,ordenController.obtenerOrdenes);
 ordenRoute.post("/",verifyRoute,ordenController.crearOrden);
 ordenRoute.put("/:id",verifyRoute, ordenController.actualizarOrden);
-ordenRoute.delete("/:id",verifyRoute,ordenController.eliminarOrden);
+ordenRoute.delete("/:id",verifyRoute,ordenController.eliminarOrden);    

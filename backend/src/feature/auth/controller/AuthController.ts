@@ -12,6 +12,8 @@ export class AuthController {
       _next: NextFunction
     ) => {
       const validatedData = validateRegister(req.body);
+
+      console.log(validatedData);
       const isAdmin = !!validatedData.rol;
 
       const newUser = await AuthService.registerUser(validatedData, isAdmin);
@@ -39,29 +41,45 @@ export class AuthController {
         maxAge: 24 * 60 * 60 * 1000,
       };
 
-      res.status(200).cookie("access_token", token, options).json({
-        message: "El usuario inició sesión con éxito!",
-        welcomeMessage: `Bienvenido!! ${validatedData.email}`,
-      });
+      res
+        .status(200)
+        .cookie("access_token", token, options)
+        .json({
+          message: "El usuario inició sesión con éxito!",
+          bienvenida: `Bienvenido!! ${validatedData.email}`,
+        });
     }
   );
 
   static logout = (_req: Request, res: Response) => {
-    res.clearCookie("access_token", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
+    try {
+      res.clearCookie("access_token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production", // Asegúrate de que solo en producción se use secure
+        sameSite: "strict",
+      });
+      res.status(200).send({ message: "Sesión cerrada correctamente" });
+    } catch (error) {
+      res.status(500).send({ error: "Error al cerrar sesión" });
+    }
   };
 
   static protectedRoute = (req: Request, res: Response) => {
     const user = req.user as UserType;
-    console.log(user.rol);
-    
+
     if (!user) {
       res.json({ message: "Usted no esta Autorizado para ingresar acá" });
     }
 
     return res.status(200).json({ message: "Usuario autorizado", user });
+  };
+
+  static getCurrentUser = (req: Request, res: Response) => {
+    try {
+      const user = req.user;
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ message: "Error al obtener usuario actual" });
+    }
   };
 }

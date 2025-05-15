@@ -1,18 +1,22 @@
-import { connect } from "@/config/db/db.j";
+import { pool } from "@/config/db/dbB";
 import { ProductTypes } from "@/feature/products/types/productTypes";
 import { UserType } from "@/types/UserType";
-import { RowDataPacket } from "mysql2";
+import { QueryResult } from "pg";
 
 export class userControl {
   static obtenerNombre = async (user: UserType) => {
     const query = "SELECT user_id FROM users_tb WHERE nombre = $1";
-    const [rows] = await connect.query<RowDataPacket[]>(query, [user]);
-    return rows[0];
+    const result: QueryResult<{ user_id: number }> = await pool.query(query, [
+      user.nombre,
+    ]);
+    return result.rows[0]?.user_id;
   };
 
   static obtenerProductoNombre = async (producto: ProductTypes) => {
     const query = "SELECT cafe_id FROM productos_tb WHERE nombre = $1";
-    const [rows] = await connect.query<RowDataPacket[]>(query, [producto]);
-    return rows[0];
+    const result: QueryResult<{ cafe_id: number }> = await pool.query(query, [
+      producto.nombre,
+    ]);
+    return result.rows[0]?.cafe_id;
   };
 }

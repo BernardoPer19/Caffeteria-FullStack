@@ -1,7 +1,7 @@
-import { UserType } from "@/types/UserType";
+import { Roles, UserType } from "@/types/UserType";
 import { NextFunction, Request, Response } from "express";
 
-export const permisionRoles = (...rolesPermitidos: string[]) => {
+export const permisionRoles = (...rolesPermitidos: Roles[]) => {
   return (
     req: Request & { user?: UserType },
     res: Response,

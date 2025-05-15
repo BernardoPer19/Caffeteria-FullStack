@@ -3,7 +3,7 @@ export interface ProductTypes {
   nombre: string;
   descricion: string;
   sabor: string;
-  categoria: CategoriasCafes;
+  categoria: Categoriasproductos;
   img: string;
   pais: string;
   precio: number;
@@ -11,5 +11,4 @@ export interface ProductTypes {
 
 export type PostAdmin = Omit<ProductTypes, "cafe_id">;
 export type ProdUser = Omit<ProductTypes, "cafe_id">;
-
 export type Categoriasproductos = "Café" | "Torta" | "Desayuno" | "Especial";
