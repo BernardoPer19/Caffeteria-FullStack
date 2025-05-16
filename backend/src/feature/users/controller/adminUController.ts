@@ -52,7 +52,7 @@ static getAllUserByRol = catchAsync(
 
   static updateUser = catchAsync(
     async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
-      const user_id = +req.params.id;
+      const user_id =+ req.params.id;
       const vali = validateUserByAdmin(req.body);
 
       const result = await adminUserModel.actualizarAdminUser(user_id, {

@@ -1,16 +1,16 @@
+import cors from "cors";
 import express from "express";
-import cookieParser from "cookie-parser";
 import AuthRouter from "./feature/auth/routes/public/Auth.routes";
+import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware/errorhandle";
 
 // importacion de reserva y admin
-import { reservaRouter } from "./feature/reservations/routes/public/reservas.routes";
-import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/admin.routes";
-import { ProductsRouter } from "./feature/products/routes/products.routes";
-import cors from "cors";
-import { adminUserRoute } from "./feature/users/routes/private/admin/adminUser.routes";
 import { ordenRoute } from "./feature/ordenes/routes/public/orden.routes";
-import { adminRoute } from "./feature/ordenes/routes/private/admin/admin.routes";
+import { reservaRouter } from "./feature/reservations/routes/public/reservas.routes";
+import { ProductsRouter } from "./feature/products/routes/products.routes";
+import { adminUserRoute } from "./feature/users/routes/private/admin/adminUser.routes";
+import { adminOrdenRoute } from "./feature/ordenes/routes/private/admin/admin.routes";
+import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/admin.routes";
 //prueba despues lo borras esto
 //import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
 
@@ -28,12 +28,12 @@ app.use(cookieParser());
 app.use("/", AuthRouter);
 app.use("/", reservaRouter);
 
-app.use("/products", ProductsRouter);
 app.use("/orden", ordenRoute);
+app.use("/products", ProductsRouter);
 app.use("/reservations", reservaRouter);
 
 app.use("/admin", adminUserRoute);
-app.use("/admin", adminRoute);
+app.use("/admin", adminOrdenRoute);
 app.use("/admin", AdminReservaRoute);
 app.use("/admin", AdminReservaRoute);
 
