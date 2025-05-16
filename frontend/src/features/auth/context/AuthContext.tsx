@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
-import type { UserType } from "../types/UserTypes";
+import type { UserType } from "../../../types/UserTypes";
 import { getCurrentUserRequest, logoutRequest } from "../api/AuthRequest";
 import Cookies from "js-cookie";
 import { toast } from "sonner";

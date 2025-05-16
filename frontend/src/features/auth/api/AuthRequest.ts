@@ -5,11 +5,9 @@ import type {
 } from "../schema/RegisterSchema";
 import type {
   admincRegisterType,
-  // LoginType,
-  // publicRegisterType,
   RegisterSuccessResponse,
   UserType,
-} from "../types/UserTypes";
+} from "../../../types/UserTypes";
 import type { LoginUserType } from "../schema/LoginSchema";
 import { AxiosError } from "axios";
 
@@ -20,8 +18,6 @@ export const publicRegisterRequest = async (
     const res = await axios.post<RegisterSuccessResponse>("/register", data);
     return res.data;
   } catch (error) {
-    console.log(error);
-
     if (error instanceof AxiosError && error.response) {
       const backendMessage = error.response.data?.errors || error.message;
       throw new Error(backendMessage);
