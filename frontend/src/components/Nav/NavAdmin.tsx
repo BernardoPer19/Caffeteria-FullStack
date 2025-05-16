@@ -24,12 +24,12 @@ export function NavAdmin({ mobile }: Props) {
         Estadísticas
       </NavLink>
 
-      <NavLink
+      {/* <NavLink
         to="/admin/ordenes"
         className={`hover:text-[#a67c52] transition ${linkClass}`}
       >
         Ordenes
-      </NavLink>
+      </NavLink> */}
 
       <NavLink
         to="/admin/usuarios"

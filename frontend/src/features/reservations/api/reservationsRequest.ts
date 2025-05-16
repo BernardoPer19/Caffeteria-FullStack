@@ -1,10 +1,15 @@
 import axios from "../../../utils/axios";
 import { AxiosError } from "axios";
-import type { NuevaReservaInput, ReservaType } from "../types/ReservationsTypes";
+import type {
+  NuevaReservaInput,
+  ReservaType,
+} from "../types/ReservationsTypes";
 
-export const getReservasUsuario = async () => {
+export const getReservasUsuario = async (): Promise<ReservaType[]> => {
   try {
-    const response = await axios.get("/reservations");
+    const response = await axios.get<ReservaType[]>("/reservations");
+    console.log(response.data);
+    
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {
@@ -18,6 +23,8 @@ export const getReservasUsuario = async () => {
 export const postReservationsRequest = async (data: NuevaReservaInput) => {
   try {
     const response = await axios.post<ReservaType>("/reservations", data);
+    console.log(response.data);
+
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {

@@ -21,7 +21,6 @@ export function Navbar() {
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const totalQuantity = items.reduce((acc, item) => acc + item.quantity, 0);
 
-  console.log(items.length);
   return (
     <header className="bg-[#f6f1eb] shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">

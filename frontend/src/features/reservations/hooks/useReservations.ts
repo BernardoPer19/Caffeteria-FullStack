@@ -35,7 +35,7 @@ export const useReservations = () => {
       }
     },
   });
-
+  
   const {
     mutate: createReservation,
     isPending: isCreatingReservation,
@@ -47,18 +47,24 @@ export const useReservations = () => {
       queryClient.invalidateQueries({ queryKey: ["reservasUsuario"] });
     },
     onError: (error) => {
+      console.log(error);
+
       handleError("Error al crear la reserva", error);
     },
   });
 
   return {
-    reservations,
-    isFetchingReservations,
-    fetchError,
+    getData: {
+      reservations,
+      isFetchingReservations,
+      fetchError,
+    },
 
-    createReservation,
-    isCreatingReservation,
-    createError,
+    createData: {
+      createReservation,
+      isCreatingReservation,
+      createError,
+    },
 
     refetch,
   };

@@ -16,12 +16,12 @@ export function NavCliente({ mobile }: Props) {
       >
         Reservas
       </NavLink>
-      <NavLink
+      {/* <NavLink
         to="/ordenes"
         className={`hover:text-[#a67c52] transition ${linkClass}`}
       >
         Órdenes
-      </NavLink>
+      </NavLink> */}
       <NavLink
         to="/perfil"
         className={`hover:text-[#a67c52] transition ${linkClass}`}
