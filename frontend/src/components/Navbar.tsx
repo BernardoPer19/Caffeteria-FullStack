@@ -50,7 +50,12 @@ export function Navbar() {
           )}
           {!isAuthenticated && <NavGuest />}
           {isEmpleado && <NavEmpleado />}
-          {isAdmin && <NavAdmin />}
+          {isAdmin && (
+            <>
+              <NavGuest />
+              <NavAdmin />
+            </>
+          )}
           <NavAuthActions isAuthenticated={isAuthenticated} />
 
           <div className="relative cursor-pointer" onClick={toggleCart}>

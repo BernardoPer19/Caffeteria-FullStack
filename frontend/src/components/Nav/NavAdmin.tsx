@@ -17,26 +17,6 @@ export function NavAdmin({ mobile }: Props) {
       >
         Usuarios
       </NavLink>
-      <NavLink
-        to="/admin/estadisticas"
-        className={`hover:text-[#a67c52] transition ${linkClass}`}
-      >
-        Estadísticas
-      </NavLink>
-
-      {/* <NavLink
-        to="/admin/ordenes"
-        className={`hover:text-[#a67c52] transition ${linkClass}`}
-      >
-        Ordenes
-      </NavLink> */}
-
-      <NavLink
-        to="/admin/usuarios"
-        className={`hover:text-[#a67c52] transition ${linkClass}`}
-      >
-        Usuarios
-      </NavLink>
 
       <NavLink
         to="/admin/empleados"
@@ -50,6 +30,12 @@ export function NavAdmin({ mobile }: Props) {
         className={`hover:text-[#a67c52] transition ${linkClass}`}
       >
         Productos
+      </NavLink>
+      <NavLink
+        to="/admin/perfil"
+        className={`hover:text-[#a67c52] transition ${linkClass}`}
+      >
+        Perfil
       </NavLink>
     </>
   );

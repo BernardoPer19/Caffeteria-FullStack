@@ -1,9 +1,13 @@
-import React from 'react'
+import type { Roles } from "@/types/UserTypes";
+import UsersLists from "../components/UsersLists";
 
 function AdminEmpleados() {
+  const rolForFetch: Roles = "empleado";
   return (
-    <div>AdminEmpleados</div>
-  )
+    <div>
+      <UsersLists rolForFetch={rolForFetch} />
+    </div>
+  );
 }
 
-export default AdminEmpleados
+export default AdminEmpleados;

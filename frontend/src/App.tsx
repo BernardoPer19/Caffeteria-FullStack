@@ -14,6 +14,7 @@ import Perfil from "./features/profile/page/Perfil";
 import ProductsPage from "./features/products/pages/ProductsPage";
 import HeaderWithCart from "./components/HeaderWithCart";
 import UserReservas from "./features/reservations/pages/UserReservas";
+import HomePage from "./home/HomePage";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
         <AuthProvider>
           <HeaderWithCart />
           <Routes>
+            <Route path="/" element={<HomePage />} />
+
+            
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/perfil" element={<Perfil />} />
