@@ -2,28 +2,25 @@ import { Router } from "express";
 import { adminUserController } from "@features/users/controller/adminUController";
 import { permisionRoles } from "@/middleware/permisionRoles";
 import { verifyRoute } from "@/middleware/verify";
-export const  adminUserRoute = Router();
+export const adminUserRoute = Router();
 
 adminUserRoute.get(
-  "/user-management",verifyRoute,
+  "/user-management",
+  verifyRoute,
   permisionRoles("admin"),
   adminUserController.getAllUserByRol
 );
 
-adminUserRoute.post(
-  "/user",verifyRoute,
-  permisionRoles("admin"),
-  adminUserController.addUser
-);
-
 adminUserRoute.delete(
-  "/user/:id",verifyRoute,
+  "/user-management/:id",
+  verifyRoute,
   permisionRoles("admin"),
   adminUserController.deleteUser
 );
 
 adminUserRoute.put(
-  "/user/:id",verifyRoute,
+  "/user-management/:id",
+  verifyRoute,
   permisionRoles("admin"),
   adminUserController.updateUser
 );
