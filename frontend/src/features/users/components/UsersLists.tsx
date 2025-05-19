@@ -56,7 +56,7 @@ function UsersLists({ rolForFetch }: Props) {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4 text-[#5c3d2e]">
-        Usuarios Registrados
+        Nuestros Usuarios
       </h2>
 
       {isLoading && (

@@ -25,11 +25,14 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
 
-            
+
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginForm />} />
-            <Route path="/perfil" element={<Perfil />} />
+
             <Route path="/unauthorized" element={<Unauthorized />} />
+            
+            <Route path="/perfil" element={<Perfil />} />
+            
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/reservas" element={<UserReservas />} />
 

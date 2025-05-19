@@ -20,4 +20,9 @@ export interface ReservaType {
   estado: Estado;
 }
 
+export  interface UpdateEstadoReservaPayload {
+  id: number;
+  estado: "pendiente" | "aceptada" | "rechazada";
+}
+
 export type NuevaReservaInput = Omit<ReservaType, "reserva_id">;

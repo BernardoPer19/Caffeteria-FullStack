@@ -1,11 +1,11 @@
 import { Toaster } from "sonner";
-import { useReservations } from "../hooks/useReservations";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
+import { useUserReservations } from "../hooks/useReservations";
 dayjs.locale("es");
 
 function ReservarionsUser() {
-  const { getData } = useReservations();
+  const { getData } = useUserReservations();
   const { reservations, isFetchingReservations, fetchError } = getData;
 
   if (isFetchingReservations) {

@@ -26,10 +26,17 @@ export function NavAdmin({ mobile }: Props) {
       </NavLink>
 
       <NavLink
+        to="/admin/reservas"
+        className={`hover:text-[#a67c52] transition ${linkClass}`}
+      >
+        Reservas
+      </NavLink>
+
+      <NavLink
         to="/admin/productos"
         className={`hover:text-[#a67c52] transition ${linkClass}`}
       >
-        Productos
+        Productos-Administracion
       </NavLink>
       <NavLink
         to="/admin/perfil"
