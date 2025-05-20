@@ -55,7 +55,7 @@ export class AuthController {
     try {
       res.clearCookie("access_token", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Asegúrate de que solo en producción se use secure
+        secure: process.env.NODE_ENV === "production", 
         sameSite: "strict",
       });
       res.status(200).send({ message: "Sesión cerrada correctamente" });
