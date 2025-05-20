@@ -1,5 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { loginRequest, publicRegisterRequest } from "../api/AuthRequest";
+import {
+  adminRegister,
+  loginRequest,
+  publicRegisterRequest,
+} from "../api/AuthRequest";
 import { toast } from "sonner";
 
 export const useAuthForm = () => {
@@ -53,6 +57,22 @@ export const useAuthForm = () => {
     },
   });
 
+  const {
+    mutate: registerAdminMutate,
+    isPending: isRegisterAdminPending,
+    isError: isRegisterAdminError,
+    error: registerAdminError,
+    reset: resetRegisterAdmin,
+  } = useMutation({
+    mutationFn: adminRegister,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+    },
+    onError: (error) => {
+      handleError("registro", error);
+    },
+  });
+
   return {
     login: {
       loginMutate,
@@ -67,6 +87,14 @@ export const useAuthForm = () => {
       isRegisterError,
       registerError,
       resetRegister,
+    },
+
+    registerAdmin: {
+      registerAdminMutate,
+      isRegisterAdminPending,
+      isRegisterAdminError,
+      resetRegisterAdmin,
+      registerAdminError,
     },
   };
 };

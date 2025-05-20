@@ -1,9 +1,8 @@
-import React from "react";
 
 const LocationSection =  () => {
   return (
-    <main className="bg-[#e1d6c6]">
-      <div className="flex flex-col md:flex-row items-center gap-8 justify-between p-8 max-w-7xl mx-auto">
+    <main className="bg-[#e1d6c6] h-[70vh] flex justify-center items-center">
+      <div className="flex flex-col md:flex-row  items-center gap-8 justify-between p-8 max-w-7xl mx-auto">
         {/* Text section */}
         <div className="flex flex-col items-start w-full md:w-1/2 pr-8 mb-8 md:mb-0">
           <h2 className="text-3xl font-semibold text-brown-800 mb-4">
@@ -35,7 +34,7 @@ const LocationSection =  () => {
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15230.35460355607!2d-66.16729821735477!3d-17.3835158330315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x93e37409679a7a8f%3A0xf4adf70e570bf4e6!2sToc%20Toc%20Caf%C3%A9%20Gourmet!5e0!3m2!1ses!2sbo!4v1738018197044!5m2!1ses!2sbo"
             width="100%"
             height="100%"
-            className="rounded-lg size-80"
+            className="rounded-lg size-96"
             style={{ border: "0" }}
             loading="lazy"
           ></iframe>

@@ -28,7 +28,7 @@ export function Navbar() {
           to="/"
           className="text-[#5c4033] text-2xl font-bold tracking-wide"
         >
-          CaféDelicias
+          Toc Toc Cafe Gourmet
         </NavLink>
 
         {/* Botón hamburguesa */}

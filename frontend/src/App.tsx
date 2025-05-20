@@ -15,50 +15,57 @@ import ProductsPage from "./features/products/pages/ProductsPage";
 import HeaderWithCart from "./components/HeaderWithCart";
 import UserReservas from "./features/reservations/pages/UserReservas";
 import HomePage from "./home/HomePage";
+import Footer from "./home/Footer";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <AuthProvider>
-          <HeaderWithCart />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
+          <section className="min-h-screen flex flex-col">
+            <HeaderWithCart />
+            <main className="flex-1">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
 
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/login" element={<LoginForm />} />
 
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginForm />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
 
-            <Route path="/unauthorized" element={<Unauthorized />} />
-            
-            <Route path="/perfil" element={<Perfil />} />
-            
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/reservas" element={<UserReservas />} />
+                <Route path="/perfil" element={<Perfil />} />
 
-            {/* Rutas protegidas para admin */}
-            <Route
-              element={<ProtectedRoute allowedRoles={["admin", "empleado"]} />}
-            >
-              <Route path="/admin/ordenes" element={<AdminOrdenes />} />
-              <Route path="/admin/reservas" element={<AdminReservas />} />
-              <Route path="/admin/productos" element={<ProductosAdmin />} />
-            </Route>
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/reservas" element={<UserReservas />} />
 
-            <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-              <Route path="/admin/ordenes" element={<AdminOrdenes />} />
-              <Route path="/admin/reservas" element={<AdminReservas />} />
-              <Route path="/admin/usuarios" element={<AdminUsuarios />} />
-              <Route path="/admin/empleados" element={<AdminEmpleados />} />
-              <Route path="/admin/productos" element={<ProductosAdmin />} />
-              <Route path="/admin/perfil" element={<Perfil />} />
-            </Route>
+                {/* Rutas protegidas para admin */}
+                <Route
+                  element={
+                    <ProtectedRoute allowedRoles={["admin", "empleado"]} />
+                  }
+                >
+                  <Route path="/admin/ordenes" element={<AdminOrdenes />} />
+                  <Route path="/admin/reservas" element={<AdminReservas />} />
+                  <Route path="/admin/productos" element={<ProductosAdmin />} />
+                </Route>
 
-            <Route element={<ProtectedRoute allowedRoles={["empleado"]} />}>
-              <Route path="/empleado-panel" element={"<EmpleadoPanel />"} />
-              <Route path="/admin/perfil" element={<Perfil />} />
-            </Route>
-          </Routes>
+                <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+                  <Route path="/admin/ordenes" element={<AdminOrdenes />} />
+                  <Route path="/admin/reservas" element={<AdminReservas />} />
+                  <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+                  <Route path="/admin/empleados" element={<AdminEmpleados />} />
+                  <Route path="/admin/productos" element={<ProductosAdmin />} />
+                  <Route path="/admin/perfil" element={<Perfil />} />
+                </Route>
+
+                <Route element={<ProtectedRoute allowedRoles={["empleado"]} />}>
+                  <Route path="/empleado-panel" element={"<EmpleadoPanel />"} />
+                  <Route path="/admin/perfil" element={<Perfil />} />
+                </Route>
+              </Routes>
+            </main>
+            <Footer />
+          </section>
         </AuthProvider>
       </BrowserRouter>
     </>

@@ -45,7 +45,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addItem = (product: ProductTypes) => {
-    console.log("Añadiendo producto:", product.cafe_id);
 
     setItems((prev) => {
       const existing = prev.find((item) => item.cafe_id === product.cafe_id);
