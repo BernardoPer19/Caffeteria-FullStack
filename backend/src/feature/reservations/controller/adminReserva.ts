@@ -15,28 +15,30 @@ export class adminController {
 
   static deleteReservation = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
-      const reservaId =+ req.params.id; //??
+      const reservaId = +req.params.id; //??
       const reserva = await adminModel.eliminarUnaReserva(reservaId);
       res.status(200).json(reserva);
     }
   );
 
-  static updateReserva = catchAsync(
+  static updateEstadoReserva = catchAsync(
     async (req: Request, res: Response, _next: NextFunction) => {
-      const reserva = +req.params.id;
-      const vali = validateReserva(req.body);
-      const plan = vali.plan;
-      const planId = await planTrabajo.controlIdPlan(plan);
+      const reservaId = + req.params.id;
+      const { estado } = req.body;
 
-      const reservaAdmin = await adminModel.acualizarUnaReserva(reserva, {
-        plan_id: planId,
-        fecha_inicio: vali.fecha_inicio,
-        fecha_fin: vali.fecha_fin,
-      } as ReservaType);
+      if (!["pendiente", "aceptada", "rechazada"].includes(estado)) {
+        return res.status(400).json({ message: "Estado inválido" });
+      }
 
-      res
-        .status(201)
-        .json({ message: " se actualizo la cita  exitosamente", reservaAdmin });
+      const updated = await adminModel.actualizarEstadoReserva(
+        reservaId,
+        estado
+      );
+      if (!updated) {
+        return res.status(404).json({ message: "Reserva no encontrada" });
+      }
+
+      res.status(200).json(updated);
     }
   );
 }

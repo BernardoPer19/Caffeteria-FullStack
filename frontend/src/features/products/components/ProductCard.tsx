@@ -1,4 +1,4 @@
-import { ShoppingCart, Eye, Coffee } from "lucide-react";
+import { ShoppingCart, Eye } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import type { ProductTypes } from "../types/ProductsType";
 
@@ -9,7 +9,9 @@ type Props = {
 const ProductCard = ({ prods }: Props) => {
   const { addItem } = useCart();
   return (
-    <div className="bg-[#fffaf4] rounded-3xl shadow-md hover:shadow-2xl transition duration-300 border border-[#e8dfd7] overflow-hidden flex flex-col">
+    <div
+      className="bg-[#fffaf4] rounded-3xl shadow-md hover:shadow-2xl transition duration-300 border border-[#e8dfd7] overflow-hidden flex flex-col"
+    >
       <div className="overflow-hidden">
         <img
           src={prods.img}
@@ -28,13 +30,13 @@ const ProductCard = ({ prods }: Props) => {
           </p>
 
           <div className="flex flex-wrap gap-2 text-xs text-[#7d5a44] mb-4">
-            <span className="bg-[#e8dfd7] px-2 py-1 rounded-full">
+            <span className="bg-[#e8dfd7] px-2 py-1 rounded-full hover:bg-amber-950 hover:text-[#e8dfd7] transition-colors cursor-pointer">
               Origen: {prods.pais}
             </span>
-            <span className="bg-[#e8dfd7] px-2 py-1 rounded-full">
+            <span className="bg-[#e8dfd7] px-2 py-1 rounded-full hover:bg-amber-950 hover:text-[#e8dfd7] transition-colors cursor-pointer">
               Sabor: {prods.sabor}
             </span>
-            <span className="bg-[#e8dfd7] px-2 py-1 rounded-full">
+            <span className="bg-[#e8dfd7] px-2 py-1 rounded-full hover:bg-amber-950 hover:text-[#e8dfd7] transition-colors cursor-pointer">
               {prods.categoria}
             </span>
           </div>
@@ -42,11 +44,11 @@ const ProductCard = ({ prods }: Props) => {
 
         <div className="flex items-center justify-between mt-2">
           <span className="text-[#4b2e1f] text-lg font-bold">
-            ${prods.precio}
+            {prods.precio} Bs.
           </span>
         </div>
 
-        <div className="mt-4 grid grid-cols-3 gap-2">
+        <div className="mt-4 grid grid-cols-2 gap-2">
           <button
             onClick={() => addItem(prods)}
             title="Añadir al carrito"
@@ -55,13 +57,7 @@ const ProductCard = ({ prods }: Props) => {
             <ShoppingCart size={16} />
             <span className="hidden sm:inline">Carrito</span>
           </button>
-          <button
-            title="Hacer pedido"
-            className="flex items-center justify-center gap-1 px-2 py-2   bg-[#b77e58] hover:bg-[#9c6746] text-white rounded-xl text-sm transition-colors"
-          >
-            <Coffee size={16} />
-            <span className="hidden sm:inline">Pedir</span>
-          </button>
+
           <button
             title="Ver más detalles"
             className="flex items-center justify-center gap-1 px-2 py-2 bg-[#d7c0a5] hover:bg-[#c6a98d] text-[#4b2e1f] rounded-xl text-sm transition-colors"

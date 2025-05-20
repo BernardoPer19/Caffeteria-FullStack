@@ -1,5 +1,5 @@
 import { pool } from "@/config/db/dbB";
-import { Reserva, ReservaType } from "../types/reserva";
+import { Estado, Reserva, ReservaType } from "../types/reserva";
 
 export class adminModel {
   static obtenerTodasLasReservas = async (): Promise<Reserva[]> => {
@@ -19,25 +19,17 @@ export class adminModel {
     return { message: "se eliminó la reserva con éxito" };
   };
 
-  static acualizarUnaReserva = async (
+  static actualizarEstadoReserva = async (
     reserva_id: number,
-    data: ReservaType
+    estado: Estado
   ): Promise<{ message: string } | null> => {
     const query = `
-      UPDATE reservas_tb
-      SET plan_id = $1, fecha_inicio = $2, fecha_fin = $3
-      WHERE reserva_id = $4
-    `;
-    const values = [
-      data.plan_id,
-      data.fecha_inicio,
-      data.fecha_fin,
-      reserva_id,
-    ];
-    const result = await pool.query(query, values);
-    if (result.rowCount === 0) {
-      return null;
-    }
-    return { message: "se actualizó la reserva con éxito" };
+    UPDATE reservas_tb
+    SET estado = $1
+    WHERE reserva_id = $2
+  `;
+    const result = await pool.query(query, [estado, reserva_id]);
+    if (result.rowCount === 0) return null;
+    return { message: "Estado de la reserva actualizado exitosamente" };
   };
 }

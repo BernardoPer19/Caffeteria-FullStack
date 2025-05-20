@@ -6,20 +6,21 @@ import { verifyRoute } from "@/middleware/verify";
 export const AdminReservaRoute = Router();
 
 AdminReservaRoute.get(
-  "/admin/reservation",
+  "/admin/reservations",
   verifyRoute,
   permisionRoles("admin"),
   adminController.getAllReservations
 );
 AdminReservaRoute.delete(
-  "/admin/reservation/:id",
+  "/admin/reservations/:id",
   verifyRoute,
   permisionRoles("admin"),
   adminController.deleteReservation
 );
-AdminReservaRoute.put(
-  "/admin/reservation/:id",
+
+AdminReservaRoute.patch(
+  "/admin/reservations/estado/:id",
   verifyRoute,
   permisionRoles("admin"),
-  adminController.updateReserva
+  adminController.updateEstadoReserva
 );
