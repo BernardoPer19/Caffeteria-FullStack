@@ -35,7 +35,7 @@ app.use("/reservations", reservaRouter);
 app.use("/admin", adminUserRoute);
 app.use("/admin", adminOrdenRoute);
 app.use("/admin", AdminReservaRoute);
-app.use("/admin", AdminReservaRoute);
+app.use("/", AdminReservaRoute);
 
 app.use(errorHandler);
 

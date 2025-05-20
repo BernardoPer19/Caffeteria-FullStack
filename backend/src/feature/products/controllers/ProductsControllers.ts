@@ -32,16 +32,20 @@ export class ProductController {
     });
   });
 
-  static create = catchAsync(async (req: Request, res: Response) => {
-    const validated = validateProduct(req.body);
-    const createdProduct = await ProductsModel.create(validated);
+  static create = async (req: Request, res: Response) => {
+    try {
+      const validated = validateProduct(req.body);
+      const createdProduct = await ProductsModel.create(validated);
 
-    res.status(201).json({
-      success: true,
-      message: "Producto creado correctamente",
-      data: createdProduct,
-    });
-  });
+      res.status(201).json({
+        success: true,
+        message: "Producto creado correctamente",
+        data: createdProduct,
+      });
+    } catch (error) {
+      res.status(404).json(error.message)
+    }
+  };
 
   static remove = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
