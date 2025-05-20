@@ -1,38 +1,23 @@
-import { validateUserByAdmin } from "../schema/userSchema";
+import { validatePartialUserByAdmin } from "../schema/userSchema";
 import { adminUserModel } from "../model/adminUserModel";
 import { Request, Response, NextFunction } from "express";
 import { catchAsync } from "@/middleware/catchAsync";
-import { AdminUserTypes } from "../types/admin";
+import { RolesType } from "../types/admin";
 
 export class adminUserController {
-static getAllUserByRol = catchAsync(
-    async (
-      req: Request,
-      res: Response,
-      _next: NextFunction
-    ): Promise<void> => {
-      const {rol} = req.query;
+  static getAllUserByRol = catchAsync(
+    async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
+      const { rol } = req.query;
       if (typeof rol !== "string") {
         res
           .status(400)
           .json({ message: "La especialidad  debe ser un string" });
         return;
-      }     
+      }
 
       const result = await adminUserModel.obtenerTodosLosUsuarios(rol);
       res.status(200).json({
         status: "success",
-        data: result,
-      });
-    }
-  );
-
-  static addUser = catchAsync(
-    async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
-      const vali = validateUserByAdmin(req.body);
-      const result = await adminUserModel.agregarUsuarios(vali);
-      res.status(201).json({
-        status: "succes",
         data: result,
       });
     }
@@ -52,15 +37,28 @@ static getAllUserByRol = catchAsync(
 
   static updateUser = catchAsync(
     async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
-      const user_id =+ req.params.id;
-      const vali = validateUserByAdmin(req.body);
+      const user_id = +req.params.id;
+      const vali = validatePartialUserByAdmin(req.body);
+      console.log(req.body);
 
-      const result = await adminUserModel.actualizarAdminUser(user_id, {
-        nombre: vali.nombre,
-        email: vali.email,
-        contraseña: vali.contraseña,
-        rol: vali.rol,
-      } as AdminUserTypes);
+      const valiToUpdate: any = { ...vali };
+      if (valiToUpdate.rol !== undefined) {
+        valiToUpdate.rol = valiToUpdate.rol as RolesType;
+      }
+
+      const result = await adminUserModel.actualizarAdminUser(
+        user_id,
+        valiToUpdate
+      );
+
+      if (!result) {
+        res.status(404).json({
+          status: "fail",
+          message: "No se encontró el usuario a actualizar",
+        });
+        return;
+      }
+
       res.status(201).json({
         status: "success",
         data: result,
@@ -68,3 +66,4 @@ static getAllUserByRol = catchAsync(
     }
   );
 }
+//admin/user-management?rol=usuario

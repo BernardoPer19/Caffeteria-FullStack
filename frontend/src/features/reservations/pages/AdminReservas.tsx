@@ -1,12 +1,13 @@
-import React from 'react'
-import ReservationsForm from '../components/ReservationsForm'
+import { Toaster } from "sonner";
+import { AdminReservasTable } from "../components/admin/ReservationsManagment";
 
 function AdminReservas() {
   return (
     <div>
-      <ReservationsForm/>
+      <Toaster position="top-right" theme="dark" closeButton duration={2000}/>
+      <AdminReservasTable />
     </div>
-  )
+  );
 }
 
-export default AdminReservas
+export default AdminReservas;

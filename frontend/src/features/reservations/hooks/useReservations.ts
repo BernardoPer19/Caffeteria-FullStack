@@ -1,17 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   getReservasUsuario,
   postReservationsRequest,
 } from "../api/reservationsRequest";
-import { toast } from "sonner";
 
-export const useReservations = () => {
+
+export const useUserReservations = () => {
   const queryClient = useQueryClient();
 
-  const handleSuccess = (message: string) => {
-    toast.success(message);
-  };
-
+  const handleSuccess = (message: string) => toast.success(message);
   const handleError = (context: string, error: any) => {
     console.error(`❌ Error en ${context}:`, error);
     const message =
@@ -35,7 +33,7 @@ export const useReservations = () => {
       }
     },
   });
-  
+
   const {
     mutate: createReservation,
     isPending: isCreatingReservation,
@@ -46,11 +44,7 @@ export const useReservations = () => {
       handleSuccess("Reserva creada con éxito.");
       queryClient.invalidateQueries({ queryKey: ["reservasUsuario"] });
     },
-    onError: (error) => {
-      console.log(error);
-
-      handleError("Error al crear la reserva", error);
-    },
+    onError: (error) => handleError("Error al crear la reserva", error),
   });
 
   return {
@@ -59,13 +53,12 @@ export const useReservations = () => {
       isFetchingReservations,
       fetchError,
     },
-
     createData: {
       createReservation,
       isCreatingReservation,
       createError,
     },
-
     refetch,
   };
 };
+

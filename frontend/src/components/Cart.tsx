@@ -1,7 +1,7 @@
 import { useCart } from "../features/products/context/CartContext";
 
 const Cart = () => {
-  const { isCartOpen, removeItem, items } = useCart();
+  const { isCartOpen, removeItem, items, toggleCart } = useCart();
 
   if (!isCartOpen) return null;
 
@@ -12,8 +12,17 @@ const Cart = () => {
 
   return (
     <aside className="fixed right-0 top-0 w-full sm:w-96 h-full bg-white shadow-2xl z-50 p-6 flex flex-col">
-      <h2 className="text-2xl font-bold mb-4 text-[#4b2e1f]">🛒 Tu carrito</h2>
-
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold mb-4 text-[#4b2e1f]">
+          🛒 Tu carrito
+        </h2>
+        <h1
+          onClick={toggleCart}
+          className="text-red-600 font-bold text-xl  cursor-pointer"
+        >
+          X
+        </h1>
+      </div>
       {items.length === 0 ? (
         <p className="text-gray-500 text-center mt-8">El carrito está vacío</p>
       ) : (

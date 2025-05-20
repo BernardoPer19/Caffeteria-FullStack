@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useReservations } from "../hooks/useReservations";
 import { schemaReserva, type reservasType } from "../schema/ReservasSchema";
 import type { NuevaReservaInput, PlanNombre } from "../types/ReservationsTypes";
+import { useUserReservations } from "../hooks/useReservations";
 
 // Opciones de planes como strings
 const PLAN_OPTIONS = [
@@ -33,7 +33,7 @@ const ReservationsForm = () => {
     },
   });
 
-  const { createData } = useReservations();
+  const { createData } = useUserReservations();
 
   const onSubmit = (data: reservasType) => {
     const formattedData: NuevaReservaInput = {
