@@ -16,6 +16,7 @@ import HeaderWithCart from "./components/HeaderWithCart";
 import UserReservas from "./features/reservations/pages/UserReservas";
 import HomePage from "./home/HomePage";
 import Footer from "./home/Footer";
+import { ProductsFilterProvider } from "./features/products/context/ProductsFilter";
 
 function App() {
   return (
@@ -34,8 +35,14 @@ function App() {
                 <Route path="/unauthorized" element={<Unauthorized />} />
 
                 <Route path="/perfil" element={<Perfil />} />
-
-                <Route path="/products" element={<ProductsPage />} />
+                <Route
+                  path="/products"
+                  element={
+                    <ProductsFilterProvider>
+                      <ProductsPage />
+                    </ProductsFilterProvider>
+                  }
+                />
                 <Route path="/reservas" element={<UserReservas />} />
 
                 {/* Rutas protegidas para admin */}

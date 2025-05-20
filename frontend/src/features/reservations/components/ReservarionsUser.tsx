@@ -1,4 +1,3 @@
-import { Toaster } from "sonner";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { useUserReservations } from "../hooks/useReservations";
@@ -22,7 +21,6 @@ function ReservarionsUser() {
 
   return (
     <main className="p-4 sm:p-8 min-h-screen">
-      <Toaster />
       <h1 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
         🗓️ Tus Reservas
       </h1>

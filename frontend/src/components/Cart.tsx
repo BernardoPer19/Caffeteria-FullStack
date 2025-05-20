@@ -68,7 +68,14 @@ const Cart = () => {
           </div>
           <button
             className="w-full bg-[#6f4e37] hover:bg-[#5a3f2d] text-white py-3 rounded-xl transition-colors font-semibold"
-            onClick={() => alert("¡Gracias por tu compra! ☕")}
+            onClick={() => {
+              const phone = "59164854829"; // Código de país (591 para Bolivia) + tu número
+              const message = encodeURIComponent(
+                "Hola, quiero finalizar mi compra de productos de la cafetería --- la web fue hecha con amor por Agustin <3"
+              );
+              const url = `https://wa.me/${phone}?text=${message}`;
+              window.open(url, "_blank");
+            }}
           >
             Finalizar compra
           </button>

@@ -66,8 +66,10 @@ export const useAuthForm = () => {
   } = useMutation({
     mutationFn: adminRegister,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      toast.success("Se registró correctamente el empleado");
+      queryClient.invalidateQueries({ queryKey: ["usersData", "empleado"] });
     },
+
     onError: (error) => {
       handleError("registro", error);
     },

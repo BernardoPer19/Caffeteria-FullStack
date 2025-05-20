@@ -30,7 +30,7 @@ export const adminRegister = async (
   data: AdminRegisterType
 ): Promise<admincRegisterType> => {
   try {
-    const res = await axios.post<admincRegisterType>("/register-admin", data);
+    const res = await axios.post<admincRegisterType>("/admin/register", data);
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError && error.response) {

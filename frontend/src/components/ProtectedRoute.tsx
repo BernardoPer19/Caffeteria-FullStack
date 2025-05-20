@@ -10,7 +10,7 @@ export function ProtectedRoute({ allowedRoles }: Props) {
   const { isAuthenticated, user } = useAuthContext();
 
   if (!isAuthenticated || !user || !user.rol) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/unauthorized" replace />;
   }
 
   if (!allowedRoles.includes(user.rol)) {

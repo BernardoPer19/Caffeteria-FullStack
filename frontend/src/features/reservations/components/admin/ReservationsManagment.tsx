@@ -61,7 +61,7 @@ export const AdminReservasTable = () => {
                   className="bg-white rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300"
                 >
                   <td className="py-4 px-6 font-mono text-sm text-[#6b4c3b]">{reserva.reserva_id}</td>
-                  <td className="py-4 px-6 font-semibold text-[#8b5e3c]">{reserva.plan ? reserva.plan : "Sin plan"}</td>
+                  <td className="py-4 px-6 font-semibold text-[#8b5e3c]">{reserva.plan ? reserva.plan : "---"}</td>
                   <td className="py-4 px-6">{new Date(reserva.fecha_inicio).toLocaleDateString()}</td>
                   <td className="py-4 px-6">{new Date(reserva.fecha_fin).toLocaleDateString()}</td>
                   <td className="py-4 px-6">{reserva.hora_cita}</td>
