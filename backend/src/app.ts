@@ -11,6 +11,7 @@ import { ProductsRouter } from "./feature/products/routes/products.routes";
 import { adminUserRoute } from "./feature/users/routes/private/admin/adminUser.routes";
 import { adminOrdenRoute } from "./feature/ordenes/routes/private/admin/admin.routes";
 import { AdminReservaRoute } from "./feature/reservations/routes/private/admin/admin.routes";
+import { AdminAuthRoute } from "./feature/auth/routes/private/admin/admin.routes";
 //prueba despues lo borras esto
 //import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
 
@@ -35,6 +36,7 @@ app.use("/reservations", reservaRouter);
 app.use("/admin", adminUserRoute);
 app.use("/admin", adminOrdenRoute);
 app.use("/admin", AdminReservaRoute);
+app.use("/admin", AdminAuthRoute);
 app.use("/", AdminReservaRoute);
 
 app.use(errorHandler);
