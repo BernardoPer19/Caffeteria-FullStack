@@ -9,7 +9,7 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ) => {
-  // Errores de validación con Zod
+
   if (err instanceof ZodError) {
     const errors = err.errors.map((e) => ({
       path: e.path.join("."),
@@ -22,7 +22,7 @@ export const errorHandler = (
     });
   }
 
-  // Errores personalizados
+ 
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
       success: false,
@@ -30,7 +30,7 @@ export const errorHandler = (
     });
   }
 
-  // Error inesperado
+  
   console.error("❌ Error inesperado:", err);
   return res.status(500).json({
     success: false,
