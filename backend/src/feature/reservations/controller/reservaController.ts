@@ -3,7 +3,7 @@ import { reservaModel } from "../model/reservaModel";
 import { validateReserva } from "../schema/reservaSchema";
 import {  ReservaType } from "../types/reserva";
 import { planTrabajo } from "../model/controlId";
-import { catchAsync } from "@/middleware/catchAsync";
+import { catchAsync } from "../../..//middleware/catchAsync";
 
 export class reservaController {
   static obtenerTodasLasReservas = catchAsync(

@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
 import { validateLogin, validateRegister } from "../schemas/AuthSchema";
-import { catchAsync } from "@/middleware/catchAsync";
+import { catchAsync } from "../../../middleware/catchAsync";
 import { AuthService } from "../services/AuthService";
-import { UserType } from "@/types/UserType";
+import { UserType } from "../../../types/UserType";
 
 export class AuthController {
   static RegisterUser = catchAsync(

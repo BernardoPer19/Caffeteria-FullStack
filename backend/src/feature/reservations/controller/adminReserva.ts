@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { adminModel } from "../model/adminModel";
-import { catchAsync } from "@/middleware/catchAsync";
+import { catchAsync } from "../../..//middleware/catchAsync";
 
 export class adminController {
   static getAllReservations = catchAsync(

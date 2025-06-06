@@ -1,4 +1,4 @@
-import { catchAsync } from "@/middleware/catchAsync";
+import { catchAsync } from "../../../middleware/catchAsync";
 import { Request, Response, NextFunction } from "express";
 import { ProductsModel } from "../models/productsModel";
 import { updateProductSchema, validateProduct } from "../schemas/SchemaProduct";

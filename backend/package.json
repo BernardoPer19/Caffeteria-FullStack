@@ -4,10 +4,9 @@
   "description": "Backend del sistema de cafetería con roles y JWT",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --project tsconfig.json -r tsconfig-paths/register src/app.ts",
     "build": "tsc",
     "start": "node dist/app.js",
-    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest --detectOpenHandles"
+    "dev": "ts-node-dev --respawn --transpile-only --project tsconfig.json -r tsconfig-paths/register src/app.ts"
   },
   "keywords": [],
   "author": "Agustín & Joaquin",

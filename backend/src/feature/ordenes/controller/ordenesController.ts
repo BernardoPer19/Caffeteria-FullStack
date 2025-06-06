@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { catchAsync } from "@/middleware/catchAsync";
+import { catchAsync } from "../../../middleware/catchAsync";
 import { ordenModel } from "../model/ordenModel";
 import { validateOrden } from "../schema/ordenesSchema";
 import { OrdenTypeFull } from "../types/ordenType";

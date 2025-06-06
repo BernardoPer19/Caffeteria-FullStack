@@ -1,7 +1,7 @@
 import { validatePartialUserByAdmin } from "../schema/userSchema";
 import { adminUserModel } from "../model/adminUserModel";
 import { Request, Response, NextFunction } from "express";
-import { catchAsync } from "@/middleware/catchAsync";
+import { catchAsync } from "../../../middleware/catchAsync";
 import { RolesType } from "../types/admin";
 
 export class adminUserController {
