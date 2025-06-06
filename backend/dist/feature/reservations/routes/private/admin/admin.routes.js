@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminReservaRoute = void 0;
+const express_1 = require("express");
+const adminReserva_1 = require("@/feature/reservations/controller/adminReserva");
+const permisionRoles_1 = require("@/middleware/permisionRoles");
+const verify_1 = require("@/middleware/verify");
+exports.AdminReservaRoute = (0, express_1.Router)();
+exports.AdminReservaRoute.get("/admin/reservations", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin"), adminReserva_1.adminController.getAllReservations);
+exports.AdminReservaRoute.delete("/admin/reservations/:id", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin"), adminReserva_1.adminController.deleteReservation);
+exports.AdminReservaRoute.patch("/admin/reservations/estado/:id", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin"), adminReserva_1.adminController.updateEstadoReserva);

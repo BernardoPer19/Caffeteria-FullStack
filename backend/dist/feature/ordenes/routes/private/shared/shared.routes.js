@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const permisionRoles_1 = require("@/middleware/permisionRoles");
+const verify_1 = require("@/middleware/verify");
+const express_1 = require("express");
+const ordenesController_1 = require("@/feature/ordenes/controller/ordenesController");
+const SharedOrdersRouter = (0, express_1.Router)();
+SharedOrdersRouter.get("/orders", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), ordenesController_1.ordenController.obtenerOrdenes);
+SharedOrdersRouter.post("/orders", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), ordenesController_1.ordenController.crearOrden);
+SharedOrdersRouter.delete("/orders/:id", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), ordenesController_1.ordenController.eliminarOrden);
+SharedOrdersRouter.put("/orders", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), ordenesController_1.ordenController.actualizarOrden);

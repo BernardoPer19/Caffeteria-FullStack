@@ -1,8 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { adminModel } from "../model/adminModel";
-import { validateReserva } from "../schema/reservaSchema";
-import { ReservaType } from "../types/reserva";
-import { planTrabajo } from "../model/controlId";
 import { catchAsync } from "@/middleware/catchAsync";
 
 export class adminController {
@@ -38,7 +35,7 @@ export class adminController {
         return res.status(404).json({ message: "Reserva no encontrada" });
       }
 
-      res.status(200).json(updated);
+      return res.status(200).json(updated);
     }
   );
 }

@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const permisionRoles_1 = require("@/middleware/permisionRoles");
+const verify_1 = require("@/middleware/verify");
+const express_1 = require("express");
+const SharedOrdersRouter = (0, express_1.Router)();
+SharedOrdersRouter.get("/reservations", () => { });
+SharedOrdersRouter.get("/orders", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), () => { });
+SharedOrdersRouter.post("/orders", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), () => { });
+SharedOrdersRouter.delete("/orders/:id", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), () => { });
+SharedOrdersRouter.put("/orders", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), () => { });
