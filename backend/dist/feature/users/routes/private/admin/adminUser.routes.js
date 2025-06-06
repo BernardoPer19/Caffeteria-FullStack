@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.adminUserRoute = void 0;
+const express_1 = require("express");
+const adminUController_1 = require("@features/users/controller/adminUController");
+const permisionRoles_1 = require("@/middleware/permisionRoles");
+const verify_1 = require("@/middleware/verify");
+exports.adminUserRoute = (0, express_1.Router)();
+exports.adminUserRoute.get("/user-management", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin"), adminUController_1.adminUserController.getAllUserByRol);
+exports.adminUserRoute.delete("/user-management/:id", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin"), adminUController_1.adminUserController.deleteUser);
+exports.adminUserRoute.put("/user-management/:id", verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin"), adminUController_1.adminUserController.updateUser);

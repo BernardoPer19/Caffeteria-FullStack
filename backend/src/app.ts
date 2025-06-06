@@ -4,7 +4,6 @@ import AuthRouter from "./feature/auth/routes/public/Auth.routes";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware/errorhandle";
 
-// importacion de reserva y admin
 import { ordenRoute } from "./feature/ordenes/routes/public/orden.routes";
 import { reservaRouter } from "./feature/reservations/routes/public/reservas.routes";
 import { ProductsRouter } from "./feature/products/routes/products.routes";
@@ -15,7 +14,7 @@ import { AdminAuthRoute } from "./feature/auth/routes/private/admin/admin.routes
 //prueba despues lo borras esto
 //import AuthRouter2 from "./feature/auth/routes/public/Auth.routes";
 
-const app = express();
+export const app = express();
 const PORT = 3000;
 app.use(
   cors({

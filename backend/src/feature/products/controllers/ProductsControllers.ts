@@ -25,27 +25,23 @@ export class ProductController {
       return res.status(404).json({ message: "Producto no encontrado" });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Producto encontrado",
       data: product,
     });
   });
 
-  static create = async (req: Request, res: Response) => {
-    try {
-      const validated = validateProduct(req.body);
-      const createdProduct = await ProductsModel.create(validated);
+  static create = catchAsync(async (req: Request, res: Response) => {
+    const validated = validateProduct(req.body);
+    const createdProduct = await ProductsModel.create(validated);
 
-      res.status(201).json({
-        success: true,
-        message: "Producto creado correctamente",
-        data: createdProduct,
-      });
-    } catch (error) {
-      res.status(404).json(error.message)
-    }
-  };
+    res.status(201).json({
+      success: true,
+      message: "Producto creado correctamente",
+      data: createdProduct,
+    });
+  })
 
   static remove = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -55,7 +51,7 @@ export class ProductController {
     }
 
     await ProductsModel.delete(Number(id));
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Producto eliminado correctamente",
     });
@@ -90,7 +86,7 @@ export class ProductController {
         });
       }
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message: "Producto actualizado correctamente",
         data: updatedProduct,
@@ -111,7 +107,7 @@ export class ProductController {
 
       const products = await ProductsModel.findByCategory(category);
 
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         results: products.length,
         data: products,

@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sharedUserRoutes = void 0;
+const express_1 = require("express");
+const adminUController_1 = require("@features/users/controller/adminUController");
+const permisionRoles_1 = require("@/middleware/permisionRoles");
+const verify_1 = require("@/middleware/verify");
+exports.sharedUserRoutes = (0, express_1.Router)();
+exports.sharedUserRoutes.get('/user', verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), adminUController_1.adminUserController.getAllUserByRol);
+exports.sharedUserRoutes.put('/user/:id', verify_1.verifyRoute, (0, permisionRoles_1.permisionRoles)("admin", "empleado"), adminUController_1.adminUserController.updateUser);

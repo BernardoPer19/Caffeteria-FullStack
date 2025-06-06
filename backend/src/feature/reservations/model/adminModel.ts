@@ -1,5 +1,5 @@
 import { pool } from "@/config/db/dbB";
-import { Estado, Reserva, ReservaType } from "../types/reserva";
+import { Estado, Reserva } from "../types/reserva";
 
 export class adminModel {
   static obtenerTodasLasReservas = async (): Promise<Reserva[]> => {
