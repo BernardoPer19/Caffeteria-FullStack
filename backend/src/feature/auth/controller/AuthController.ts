@@ -55,7 +55,6 @@ export class AuthController {
 
   static logout = catchAsync(
     async (_req: Request, res: Response) => {
-      // ✅ Igual lógica que en loginUser
       res
         .clearCookie("access_token", {
           httpOnly: true,
