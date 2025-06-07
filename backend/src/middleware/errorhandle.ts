@@ -1,7 +1,7 @@
 // middlewares/errorHandler.ts
 import { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
-import { AppError } from "@/utils/AppError";
+import { AppError } from "../utils/AppError";
 
 export const errorHandler = (
   err: unknown,

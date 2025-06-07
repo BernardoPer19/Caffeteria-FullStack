@@ -37,7 +37,13 @@ export class AuthService {
       );
     }
 
-    const newUser = await AuthModel.RegisterModel(validateData, isAdmin);
+    const { nombre, email, contraseña, rol } = validateData as any;
+    const userToRegister = { nombre, email, contraseña, rol };
+    const newUser = await AuthModel.RegisterModel(userToRegister, isAdmin);
     return newUser;
   }
+
+
+  // const newUser = await AuthModel.RegisterModel(validateData, isAdmin);
+  // return newUser;
 }

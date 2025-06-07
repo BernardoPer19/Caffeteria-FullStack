@@ -1,7 +1,8 @@
+import { pool } from "../../../config/db/dbB";
+import { RolModel } from "../../auth/model/AuthRol";
 import { AdminUserTypes, GetFiltroUserRol, PutAdminType } from "../types/admin";
 // import { AdminUserType } from "../schema/userSchema";
-import { RolModel } from "@/feature/auth/model/AuthRol";
-import { pool } from "@/config/db/dbB";
+
 
 export class adminUserModel {
   static obtenerTodosLosUsuarios = async  (userNombreRol : string):Promise<GetFiltroUserRol[]> => {

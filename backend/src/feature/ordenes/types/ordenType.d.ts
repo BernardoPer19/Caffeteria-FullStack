@@ -1,4 +1,4 @@
-import { ProductTypes } from "@/feature/products/types/productTypes";
+import { ProductTypes } from "../../../feature/products/types/productTypes";
 import { UserType } from "@/types/UserType";
 
  enum EstadoOrdenType {

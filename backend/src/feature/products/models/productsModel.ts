@@ -1,7 +1,7 @@
-import { pool } from "@/config/db/dbB";
 import { ProductInput } from "../schemas/SchemaProduct";
 import { CategoriasModel } from "./CategoriasModel";
 import { ProductTypes } from "../types/productTypes";
+import { pool } from "../../../config/db/dbB";
 
 export class ProductsModel {
   static async findAll(): Promise<ProductTypes[]> {

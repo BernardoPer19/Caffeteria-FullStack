@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { permisionRoles } from "@/middleware/permisionRoles";
-import { verifyRoute } from "@/middleware/verify";
+import { verifyRoute } from "../../../../../middleware/verify";
+import { permisionRoles } from "../../../../../middleware/permisionRoles";
+
 
 const SharedReservaRoutes = Router();
 

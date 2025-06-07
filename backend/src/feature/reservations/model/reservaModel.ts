@@ -1,4 +1,4 @@
-import { pool } from "@/config/db/dbB";
+import { pool } from "../../../config/db/dbB";
 import { Reserva, ReservaType } from "../types/reserva";
 
 export class reservaModel {

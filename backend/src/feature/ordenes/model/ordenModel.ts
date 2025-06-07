@@ -2,15 +2,15 @@
 
 // ordenModel.ts
 import { OrdenData } from "../schema/ordenesSchema";
-import { UserType } from "@/types/UserType";
 import { OrdenFromDB, OrdenTypeFull } from "../types/ordenType";
 import { userControl } from "./usuarioOrden";
 import { QueryResult } from "pg";
-import { pool } from "@/config/db/dbB";
+import { pool } from "../../../config/db/dbB";
+import { UserType } from "../../../types/UserType";
 
 export class ordenModel {
   static obtenerOrdenes = async (user_id: number): Promise<UserType[]> => {
-    
+
     const query = `
       SELECT u.nombre AS nombre_user, p.nombre AS nombre_cafe, p.img,
              c.nombre AS categoria_cafe, p.precio, o.fecha_creacion AS fecha_orden,

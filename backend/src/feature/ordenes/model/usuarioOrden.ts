@@ -1,7 +1,7 @@
-import { pool } from "@/config/db/dbB";
-import { ProductTypes } from "@/feature/products/types/productTypes";
-import { UserType } from "@/types/UserType";
+import { pool } from "../../../config/db/dbB";
+import { ProductTypes } from "../../../feature/products/types/productTypes";
 import { QueryResult } from "pg";
+import { UserType } from "../../../types/UserType";
 
 export class userControl {
   static obtenerNombre = async (user: UserType) => {

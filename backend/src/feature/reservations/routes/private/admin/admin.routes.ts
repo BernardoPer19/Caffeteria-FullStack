@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { adminController } from "@/feature/reservations/controller/adminReserva";
-import { permisionRoles } from "@/middleware/permisionRoles";
-import { verifyRoute } from "@/middleware/verify";
+import { verifyRoute } from "../../../../../middleware/verify";
+import { permisionRoles } from "../../../../../middleware/permisionRoles";
+import { adminController } from "../../../controller/adminReserva";
 
 export const AdminReservaRoute = Router();
 

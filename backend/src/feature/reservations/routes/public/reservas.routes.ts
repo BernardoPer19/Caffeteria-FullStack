@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { reservaController } from "../../controller/reservaController";
-import { verifyRoute } from "@/middleware/verify";
+import { verifyRoute } from "../../../../middleware/verify";
 
 export const reservaRouter = Router();
 

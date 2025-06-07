@@ -1,4 +1,4 @@
-import { pool } from "@/config/db/dbB";
+import { pool } from "../../../config/db/dbB";
 
 export class planTrabajo {
   static controlIdPlan = async (nombrePlan: string): Promise<number> => {

@@ -27,15 +27,6 @@
 
     "noEmitOnError": true,
 
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"],
-      "@config/*": ["config/*"],
-      "@features/*": ["feature/*"],
-      "@middlewares/*": ["middlewares/*"],
-      "@types/*": ["types/*"],
-      "@utils/*": ["utils/*"]
-    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]

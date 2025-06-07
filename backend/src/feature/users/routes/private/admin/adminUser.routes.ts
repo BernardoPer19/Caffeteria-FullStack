@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { adminUserController } from "@features/users/controller/adminUController";
-import { permisionRoles } from "@/middleware/permisionRoles";
-import { verifyRoute } from "@/middleware/verify";
+import { verifyRoute } from "../../../../../middleware/verify";
+import { permisionRoles } from "../../../../../middleware/permisionRoles";
+import { adminUserController } from "../../../controller/adminUController";
+
 export const adminUserRoute = Router();
 
 adminUserRoute.get(

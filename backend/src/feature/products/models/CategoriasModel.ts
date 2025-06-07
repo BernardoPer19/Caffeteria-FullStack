@@ -1,5 +1,6 @@
 // CategoriasModel.ts
-import { pool } from "@/config/db/dbB";
+
+import { pool } from "../../../config/db/dbB";
 
 export class CategoriasModel {
   static async findCategoryId(
