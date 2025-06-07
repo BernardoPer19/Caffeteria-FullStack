@@ -36,7 +36,7 @@ export class AuthController {
 
       const options: CookieOptions = {
         httpOnly: true,
-        secure: true, // debe ser true si usas HTTPS
+        secure: false, // debe ser true si usas HTTPS
         sameSite: "lax",
         maxAge: 24 * 60 * 60 * 1000,
       };
