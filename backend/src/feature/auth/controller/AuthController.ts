@@ -34,11 +34,13 @@ export class AuthController {
         validatedData.contraseña
       );
 
+      const isProduction = true; // Render usa HTTPS
+
       const options: CookieOptions = {
         httpOnly: true,
-        secure: false, // debe ser true si usas HTTPS
-        sameSite: "lax",
-        maxAge: 24 * 60 * 60 * 1000,
+        secure: isProduction,        // true porque tu backend está en HTTPS
+        sameSite: "none",            // **clave** para permitir XHR cross-site
+        maxAge: 24 * 60 * 60 * 1000, // 1 día
       };
 
       res

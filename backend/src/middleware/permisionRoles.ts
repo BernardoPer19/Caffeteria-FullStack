@@ -8,7 +8,7 @@ export const permisionRoles = (...rolesPermitidos: Roles[]) => {
     next: NextFunction
   ) => {
     const userRol = req.user?.rol;
-    console.log(userRol);
+    console.log("userRol: ", userRol);
     
     if (!userRol || !rolesPermitidos.includes(userRol)) {
       res
