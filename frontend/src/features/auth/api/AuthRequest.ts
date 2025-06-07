@@ -59,8 +59,20 @@ export const loginRequest = async (
 };
 
 export const logoutRequest = async () => {
-  const response = await axios.post("/logout");
-  return response.data;
+
+  try {
+    const response = await axios.post("/logout");
+    console.log(response.data);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+
+    if (error instanceof Error) {
+      throw new Error("No autorizado. Inicia sesión.");
+    }
+    throw new Error("Error en el servidor");
+  }
 };
 
 export const getCurrentUserRequest = async (): Promise<UserType> => {
@@ -71,7 +83,7 @@ export const getCurrentUserRequest = async (): Promise<UserType> => {
     return response.data;
   } catch (error) {
     console.log(error);
-    
+
     if (error instanceof Error) {
       throw new Error("No autorizado. Inicia sesión.");
     }

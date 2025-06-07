@@ -38,7 +38,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = async () => {
     try {
       await logoutRequest();
-
       await queryClient.cancelQueries({ queryKey: ["currentUser"] }); // Cancela peticiones pendientes
       queryClient.setQueryData(["currentUser"], null); // Limpia cache
       await queryClient.refetchQueries({ queryKey: ["currentUser"] }); // Forza revalidación

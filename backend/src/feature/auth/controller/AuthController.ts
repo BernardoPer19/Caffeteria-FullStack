@@ -4,6 +4,9 @@ import { catchAsync } from "../../../middleware/catchAsync";
 import { AuthService } from "../services/AuthService";
 import { UserType } from "../../../types/UserType";
 
+// ⚠️ CAMBIO: usar process.env.NODE_ENV
+const isProduction = process.env.NODE_ENV === "production";
+
 export class AuthController {
   static RegisterUser = catchAsync(
     async (
@@ -12,8 +15,6 @@ export class AuthController {
       _next: NextFunction
     ) => {
       const validatedData = validateRegister(req.body);
-
-      console.log(validatedData);
       const isAdmin = !!validatedData.rol;
 
       const newUser = await AuthService.registerUser(validatedData, isAdmin);
@@ -34,13 +35,12 @@ export class AuthController {
         validatedData.contraseña
       );
 
-      const isProduction = true; // Render usa HTTPS
-
+      // ✅ Cookie segura o no según entorno
       const options: CookieOptions = {
         httpOnly: true,
-        secure: isProduction,        // true porque tu backend está en HTTPS
-        sameSite: "none",            // **clave** para permitir XHR cross-site
-        maxAge: 24 * 60 * 60 * 1000, // 1 día
+        secure: isProduction,
+        sameSite: "none",
+        maxAge: 24 * 60 * 60 * 1000,
       };
 
       res
@@ -55,11 +55,12 @@ export class AuthController {
 
   static logout = catchAsync(
     async (_req: Request, res: Response) => {
+      // ✅ Igual lógica que en loginUser
       res
         .clearCookie("access_token", {
           httpOnly: true,
-          secure: false,        // true porque tu backend está en HTTPS
-          sameSite: "none",            // **clave** para permitir XHR cross-site
+          secure: isProduction,
+          sameSite: "none",
         })
         .status(200)
         .json({ message: "Sesión cerrada correctamente" });
@@ -70,7 +71,7 @@ export class AuthController {
     const user = req.user as UserType;
 
     if (!user) {
-      res.json({ message: "Usted no esta Autorizado para ingresar acá" });
+      return res.json({ message: "Usted no está autorizado para ingresar acá" });
     }
 
     return res.status(200).json({ message: "Usuario autorizado", user });
