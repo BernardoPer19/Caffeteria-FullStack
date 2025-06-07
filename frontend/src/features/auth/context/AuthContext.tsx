@@ -52,7 +52,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    console.log("👤 Estado del usuario tras cambio:", user);
     setIsAuthenticated(!isAuthLoading && !!user);
   }, [user, isAuthLoading]);
 

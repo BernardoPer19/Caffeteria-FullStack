@@ -12,7 +12,6 @@ import { useCart } from "../features/products/context/CartContext";
 export function Navbar() {
   const { items, toggleCart } = useCart();
   const { isAuthenticated, user } = useAuthContext();
-  console.log(isAuthenticated);
   
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

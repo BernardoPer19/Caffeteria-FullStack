@@ -62,11 +62,8 @@ export const logoutRequest = async () => {
 
   try {
     const response = await axios.post("/logout");
-    console.log(response.data);
-
     return response.data;
   } catch (error) {
-    console.log(error);
 
     if (error instanceof Error) {
       throw new Error("No autorizado. Inicia sesión.");
@@ -78,8 +75,6 @@ export const logoutRequest = async () => {
 export const getCurrentUserRequest = async (): Promise<UserType> => {
   try {
     const response = await axios.get("/");
-    console.log(response.data);
-
     return response.data;
   } catch (error) {
     console.log(error);
