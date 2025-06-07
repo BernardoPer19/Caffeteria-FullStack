@@ -1,4 +1,4 @@
-import { AppError } from "@utils/AppError";
+import { AppError } from "../utils/AppError";
 
 export class BadRequestError extends AppError {
   constructor(message = "Bad Request") {
@@ -15,7 +15,7 @@ export class NotFoundError extends AppError {
 export class UnauthorizedError extends AppError {
   constructor(message = "Unauthorized") {
     super(message, 401);
-  } 
+  }
 }
 
 export class ForbiddenError extends AppError {

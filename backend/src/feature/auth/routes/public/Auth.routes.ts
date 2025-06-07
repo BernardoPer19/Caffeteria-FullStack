@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "../../controller/AuthController";
-import { verifyRoute } from "@/middleware/verify";
+import { verifyRoute } from "../../../../middleware/verify";
 
 const AuthRouter = Router();
 

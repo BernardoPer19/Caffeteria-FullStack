@@ -1,9 +1,9 @@
-import { pool } from "@/config/db/dbB";
+import { pool } from "../../../config/db/dbB";
 import { QueryResult } from "pg";
 
 export class RolModel {
   static async getRol(rolName: string) {
-    
+
     try {
       const query = `SELECT rol_id FROM roles_tb WHERE rol = $1`;
       const values = [rolName];

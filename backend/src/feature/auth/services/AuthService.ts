@@ -1,6 +1,6 @@
 // services/AuthService.ts
 
-import { BadRequestError, NotFoundError, UnauthorizedError } from "@/Error";
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../../../Error";
 import { AuthModel } from "../model/AuthModel";
 import { comparePassword, createToken } from "../utils/AuthUtil";
 import { JwtPayload } from "jsonwebtoken";

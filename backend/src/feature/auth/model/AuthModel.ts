@@ -1,9 +1,9 @@
-import { pool } from "@config/db/dbB";
+import { pool } from "../../../config/db/dbB";
 import { QueryResult } from "pg";
 import { RolModel } from "./AuthRol";
 import { hashPassword } from "../utils/AuthUtil";
 import { MixedUserType } from "../schemas/AuthSchema";
-import { UserType } from "@/types/UserType";
+import { UserType } from "../../../types/UserType";
 
 export class AuthModel {
   static async RegisterModel(
@@ -20,7 +20,7 @@ export class AuthModel {
 
       const hashedPassword = await hashPassword(newUser.contraseña);
       const values = [newUser.email, newUser.nombre, hashedPassword, rolId];
-      
+
       const result: QueryResult<UserType> = await pool.query(query, values);
 
       return result.rows[0];
