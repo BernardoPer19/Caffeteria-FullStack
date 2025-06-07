@@ -16,7 +16,7 @@ export const verifyRoute = (
     const token = req.cookies.access_token;
 
     if (!token) {
-      res
+      return res
         .status(401)
         .json({ message: "No autorizado: Token no proporcionado" });
     }
@@ -26,6 +26,6 @@ export const verifyRoute = (
 
     next();
   } catch (error) {
-    res.status(401).json({ message: "Token inválido o expirado" });
+    return res.status(401).json({ message: "Token inválido o expirado" });
   }
 };
