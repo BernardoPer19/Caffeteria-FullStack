@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { JWT_PASSWORD } from "@/config/config";
+import { JWT_PASSWORD } from "../../../config/config";
 
 const hashPassword = async (password: string) => {
   const hashedPassowrd = await bcrypt.hash(password, 10);
