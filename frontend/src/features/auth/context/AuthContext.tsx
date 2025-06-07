@@ -35,13 +35,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     retry: false,
   });
 
-
   const logout = async () => {
     try {
       await logoutRequest();
-      Cookies.remove("access_token");
-      queryClient.removeQueries({ queryKey: ["currentUser"] });
 
+      // Esta línea está de más, no puede borrar cookies HttpOnly
+      // Cookies.remove("access_token"); ❌ Elimínala
+
+      queryClient.setQueryData(["currentUser"], null); // o removeQueries
       setIsAuthenticated(false);
       navigate("/login");
       toast.success("¡Sesión cerrada exitosamente!");
