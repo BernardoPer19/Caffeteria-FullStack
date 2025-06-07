@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { JWT_PASSWORD } from "@/config/config";
+import { JWT_PASSWORD } from "../config/config";
 import { UserType } from "@/types/UserType";
 
 interface AuthenticatedRequest extends Request {
@@ -14,7 +14,7 @@ export const verifyRoute = (
 ) => {
   try {
     const token = req.cookies.access_token;
-    
+
     if (!token) {
       res
         .status(401)
