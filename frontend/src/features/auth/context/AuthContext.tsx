@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import type { UserType } from "../../../types/UserTypes";
 import { getCurrentUserRequest, logoutRequest } from "../api/AuthRequest";
-import Cookies from "js-cookie";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -33,16 +32,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     queryKey: ["currentUser"],
     queryFn: getCurrentUserRequest,
     retry: false,
+    refetchOnWindowFocus: true, // 🔁 esto ayuda
   });
 
   const logout = async () => {
     try {
       await logoutRequest();
 
-      // Esta línea está de más, no puede borrar cookies HttpOnly
-      // Cookies.remove("access_token"); ❌ Elimínala
+      await queryClient.cancelQueries({ queryKey: ["currentUser"] }); // Cancela peticiones pendientes
+      queryClient.setQueryData(["currentUser"], null); // Limpia cache
+      await queryClient.refetchQueries({ queryKey: ["currentUser"] }); // Forza revalidación
 
-      queryClient.setQueryData(["currentUser"], null); // o removeQueries
       setIsAuthenticated(false);
       navigate("/login");
       toast.success("¡Sesión cerrada exitosamente!");
@@ -53,6 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
+    console.log("👤 Estado del usuario tras cambio:", user);
     setIsAuthenticated(!isAuthLoading && !!user);
   }, [user, isAuthLoading]);
 
