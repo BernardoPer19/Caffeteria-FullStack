@@ -58,8 +58,8 @@ export class AuthController {
       res
         .clearCookie("access_token", {
           httpOnly: true,
-          secure: false,
-          sameSite: "lax",
+          secure: false,        // true porque tu backend está en HTTPS
+          sameSite: "none",            // **clave** para permitir XHR cross-site
         })
         .status(200)
         .json({ message: "Sesión cerrada correctamente" });
