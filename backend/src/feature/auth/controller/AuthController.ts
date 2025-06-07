@@ -36,11 +36,11 @@ export class AuthController {
 
       const options: CookieOptions = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // debe ser true si usas HTTPS
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        secure: true, // debe ser true si usas HTTPS
+        sameSite: "lax",
         maxAge: 24 * 60 * 60 * 1000,
       };
-      
+
       res
         .status(200)
         .cookie("access_token", token, options)

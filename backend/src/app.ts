@@ -17,13 +17,14 @@ import { AdminAuthRoute } from "./feature/auth/routes/private/admin/admin.routes
 export const app = express();
 const PORT = 3000;
 
-const allowedOrigins = process.env.NODE_ENV === "production"
-  ? ["https://tu-frontend-publico.com"]
-  : ["http://localhost:5173"];
+// const allowedOrigins = process.env.NODE_ENV === "production"
+
+//   ? ["https://tu-frontend-publico.com"]
+//   : ["http://localhost:5173"];
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: " http://localhost:5173",
     credentials: true,
   })
 );
