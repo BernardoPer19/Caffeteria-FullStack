@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://backend-cafeteria-hopg.onrender.com",
+  baseURL: import.meta.env.BASE_URL || "http://localhost:3000", // Usa la variable de entorno o localhost por defecto
   withCredentials: true,
 });
 
