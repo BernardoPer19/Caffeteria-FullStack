@@ -24,7 +24,7 @@ export const verifyRoute = (
     const decoded = jwt.verify(token, JWT_PASSWORD) as UserType;
     req.user = decoded;
 
-    next();
+    return next();
   } catch (error) {
     return res.status(401).json({ message: "Token inválido o expirado" });
   }
