@@ -36,11 +36,11 @@ export class AuthController {
 
       const options: CookieOptions = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production", // debe ser true si usas HTTPS
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
         maxAge: 24 * 60 * 60 * 1000,
       };
-
+      
       res
         .status(200)
         .cookie("access_token", token, options)
@@ -55,7 +55,7 @@ export class AuthController {
     try {
       res.clearCookie("access_token", {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", 
+        secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
       });
       res.status(200).send({ message: "Sesión cerrada correctamente" });
