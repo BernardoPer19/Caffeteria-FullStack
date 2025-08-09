@@ -17,18 +17,24 @@ import { AdminAuthRoute } from "./feature/auth/routes/private/admin/admin.routes
 export const app = express();
 const PORT = 3000;
 
-// const allowedOrigins = process.env.NODE_ENV === "production"
 
-//   ? ["https://tu-frontend-publico.com"]
-//   : ["http://localhost:5173"];
+const allowedOrigins = [
+  "https://caffeteria-full-stack.vercel.app",
+  "http://localhost:5173",
+];
 
-app.use(
-  cors({
-    origin: "https://caffeteria-full-stack.vercel.app",
-    credentials: true,
-  })
-);
-
+app.use(cors({
+  origin: function(origin, callback) {
+    // origin puede ser undefined si es una petición desde Postman o curl
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("No permitido por CORS"));
+    }
+  },
+  credentials: true,
+}));
 
 app.use(express.json());
 app.use(cookieParser());
