@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://backend-cafeteria-hopg.onrender.com",
+  baseURL: "caffeteria-fullstack-production.up.railway.app",
   withCredentials: true,
 });
 
